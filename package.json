@@ -1,0 +1,23 @@
+{
+  "name": "@woodman231/exportedmonstersanctuarydatatypes",
+  "version": "1.0.0",
+  "description": "This is the outcome of generating types from the ExportedMonsterSanctuaryData package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/woodman231/ExportedMonsterSanctuaryDataTypes.git"
+  },
+  "keywords": [
+    "monster",
+    "sanctuary"
+  ],
+  "author": "Sean Woodward <seanwoodward@live.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/woodman231/ExportedMonsterSanctuaryDataTypes/issues"
+  },
+  "homepage": "https://github.com/woodman231/ExportedMonsterSanctuaryDataTypes#readme"
+}
