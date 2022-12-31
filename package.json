@@ -1,9 +1,10 @@
 {
   "name": "@woodman231/exportedmonstersanctuarydatatypes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This is the outcome of generating types from the ExportedMonsterSanctuaryData package",
   "main": "index.js",
   "scripts": {
+    "build": "tsc index.ts --declaration",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/woodman231/ExportedMonsterSanctuaryDataTypes/issues"
   },
-  "homepage": "https://github.com/woodman231/ExportedMonsterSanctuaryDataTypes#readme"
+  "homepage": "https://github.com/woodman231/ExportedMonsterSanctuaryDataTypes#readme",
+  "devDependencies": {
+    "typescript": "^4.9.4"
+  }
 }
