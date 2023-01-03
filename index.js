@@ -16,16 +16,6 @@ var ExportedMonsterSanctuaryDataTypes;
         BuffType[BuffType["Barrier"] = 8] = "Barrier";
         BuffType[BuffType["Random"] = 9] = "Random";
     })(BuffType = ExportedMonsterSanctuaryDataTypes.BuffType || (ExportedMonsterSanctuaryDataTypes.BuffType = {}));
-    var DebuffType;
-    (function (DebuffType) {
-        DebuffType[DebuffType["Weakness"] = 0] = "Weakness";
-        DebuffType[DebuffType["Shock"] = 1] = "Shock";
-        DebuffType[DebuffType["Poison"] = 2] = "Poison";
-        DebuffType[DebuffType["Chill"] = 3] = "Chill";
-        DebuffType[DebuffType["Burn"] = 4] = "Burn";
-        DebuffType[DebuffType["ArmorBreak"] = 5] = "ArmorBreak";
-        DebuffType[DebuffType["Random"] = 6] = "Random";
-    })(DebuffType = ExportedMonsterSanctuaryDataTypes.DebuffType || (ExportedMonsterSanctuaryDataTypes.DebuffType = {}));
     var EElement;
     (function (EElement) {
         EElement[EElement["Neutral"] = 0] = "Neutral";
@@ -39,6 +29,21 @@ var ExportedMonsterSanctuaryDataTypes;
         EElement[EElement["NoElement"] = 8] = "NoElement";
         EElement[EElement["QuadElement"] = 9] = "QuadElement";
     })(EElement = ExportedMonsterSanctuaryDataTypes.EElement || (ExportedMonsterSanctuaryDataTypes.EElement = {}));
+    var DebuffType;
+    (function (DebuffType) {
+        DebuffType[DebuffType["Weakness"] = 0] = "Weakness";
+        DebuffType[DebuffType["Shock"] = 1] = "Shock";
+        DebuffType[DebuffType["Poison"] = 2] = "Poison";
+        DebuffType[DebuffType["Chill"] = 3] = "Chill";
+        DebuffType[DebuffType["Burn"] = 4] = "Burn";
+        DebuffType[DebuffType["ArmorBreak"] = 5] = "ArmorBreak";
+        DebuffType[DebuffType["Random"] = 6] = "Random";
+    })(DebuffType = ExportedMonsterSanctuaryDataTypes.DebuffType || (ExportedMonsterSanctuaryDataTypes.DebuffType = {}));
+    var EDamageType;
+    (function (EDamageType) {
+        EDamageType[EDamageType["Physical"] = 0] = "Physical";
+        EDamageType[EDamageType["Magical"] = 1] = "Magical";
+    })(EDamageType = ExportedMonsterSanctuaryDataTypes.EDamageType || (ExportedMonsterSanctuaryDataTypes.EDamageType = {}));
     var EMonsterType;
     (function (EMonsterType) {
         EMonsterType[EMonsterType["None"] = 0] = "None";
@@ -71,6 +76,26 @@ var ExportedMonsterSanctuaryDataTypes;
         EquipmentType[EquipmentType["Ring"] = 4] = "Ring";
         EquipmentType[EquipmentType["Misc"] = 5] = "Misc";
     })(EquipmentType = ExportedMonsterSanctuaryDataTypes.EquipmentType || (ExportedMonsterSanctuaryDataTypes.EquipmentType = {}));
+    var EStat;
+    (function (EStat) {
+        EStat[EStat["Attack"] = 0] = "Attack";
+        EStat[EStat["Magic"] = 1] = "Magic";
+        EStat[EStat["Defense"] = 2] = "Defense";
+        EStat[EStat["Health"] = 3] = "Health";
+        EStat[EStat["Mana"] = 4] = "Mana";
+        EStat[EStat["CritChance"] = 5] = "CritChance";
+        EStat[EStat["CritDamage"] = 6] = "CritDamage";
+        EStat[EStat["ManaRegen"] = 7] = "ManaRegen";
+        EStat[EStat["AttackMagic"] = 8] = "AttackMagic";
+        EStat[EStat["Damage"] = 9] = "Damage";
+        EStat[EStat["DamageReduction"] = 10] = "DamageReduction";
+    })(EStat = ExportedMonsterSanctuaryDataTypes.EStat || (ExportedMonsterSanctuaryDataTypes.EStat = {}));
+    var EShift;
+    (function (EShift) {
+        EShift[EShift["Normal"] = 0] = "Normal";
+        EShift[EShift["Light"] = 1] = "Light";
+        EShift[EShift["Dark"] = 2] = "Dark";
+    })(EShift = ExportedMonsterSanctuaryDataTypes.EShift || (ExportedMonsterSanctuaryDataTypes.EShift = {}));
     var ESpecialBuff;
     (function (ESpecialBuff) {
         ESpecialBuff[ESpecialBuff["Infinity"] = 0] = "Infinity";
@@ -87,31 +112,6 @@ var ExportedMonsterSanctuaryDataTypes;
         ESpecialBuff[ESpecialBuff["PowerFocus"] = 11] = "PowerFocus";
         ESpecialBuff[ESpecialBuff["Predation"] = 12] = "Predation";
     })(ESpecialBuff = ExportedMonsterSanctuaryDataTypes.ESpecialBuff || (ExportedMonsterSanctuaryDataTypes.ESpecialBuff = {}));
-    var EDamageType;
-    (function (EDamageType) {
-        EDamageType[EDamageType["Physical"] = 0] = "Physical";
-        EDamageType[EDamageType["Magical"] = 1] = "Magical";
-    })(EDamageType = ExportedMonsterSanctuaryDataTypes.EDamageType || (ExportedMonsterSanctuaryDataTypes.EDamageType = {}));
-    var EShift;
-    (function (EShift) {
-        EShift[EShift["Normal"] = 0] = "Normal";
-        EShift[EShift["Light"] = 1] = "Light";
-        EShift[EShift["Dark"] = 2] = "Dark";
-    })(EShift = ExportedMonsterSanctuaryDataTypes.EShift || (ExportedMonsterSanctuaryDataTypes.EShift = {}));
-    var EStat;
-    (function (EStat) {
-        EStat[EStat["Attack"] = 0] = "Attack";
-        EStat[EStat["Magic"] = 1] = "Magic";
-        EStat[EStat["Defense"] = 2] = "Defense";
-        EStat[EStat["Health"] = 3] = "Health";
-        EStat[EStat["Mana"] = 4] = "Mana";
-        EStat[EStat["CritChance"] = 5] = "CritChance";
-        EStat[EStat["CritDamage"] = 6] = "CritDamage";
-        EStat[EStat["ManaRegen"] = 7] = "ManaRegen";
-        EStat[EStat["AttackMagic"] = 8] = "AttackMagic";
-        EStat[EStat["Damage"] = 9] = "Damage";
-        EStat[EStat["DamageReduction"] = 10] = "DamageReduction";
-    })(EStat = ExportedMonsterSanctuaryDataTypes.EStat || (ExportedMonsterSanctuaryDataTypes.EStat = {}));
     var ETargetType;
     (function (ETargetType) {
         ETargetType[ETargetType["SingleEnemy"] = 0] = "SingleEnemy";
