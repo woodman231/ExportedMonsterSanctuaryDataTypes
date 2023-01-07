@@ -1,21 +1,7 @@
 export declare namespace ExportedMonsterSanctuaryDataTypes {
-    enum EShift {
-        Normal = 0,
-        Light = 1,
-        Dark = 2
-    }
     enum EDamageType {
         Physical = 0,
         Magical = 1
-    }
-    enum DebuffType {
-        Weakness = 0,
-        Shock = 1,
-        Poison = 2,
-        Chill = 3,
-        Burn = 4,
-        ArmorBreak = 5,
-        Random = 6
     }
     enum BuffType {
         Might = 0,
@@ -29,13 +15,31 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         Barrier = 8,
         Random = 9
     }
-    enum EquipmentType {
-        Weapon = 0,
-        Armor = 1,
-        Headgear = 2,
-        Necklace = 3,
-        Ring = 4,
-        Misc = 5
+    enum DebuffType {
+        Weakness = 0,
+        Shock = 1,
+        Poison = 2,
+        Chill = 3,
+        Burn = 4,
+        ArmorBreak = 5,
+        Random = 6
+    }
+    enum EElement {
+        Neutral = 0,
+        Fire = 1,
+        Water = 2,
+        Wind = 3,
+        Earth = 4,
+        Physical = 5,
+        Magical = 6,
+        Debuff = 7,
+        NoElement = 8,
+        QuadElement = 9
+    }
+    enum EShift {
+        Normal = 0,
+        Light = 1,
+        Dark = 2
     }
     enum EMonsterType {
         None = 0,
@@ -59,38 +63,13 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         Changeling = 18,
         Ancient = 19
     }
-    enum EElement {
-        Neutral = 0,
-        Fire = 1,
-        Water = 2,
-        Wind = 3,
-        Earth = 4,
-        Physical = 5,
-        Magical = 6,
-        Debuff = 7,
-        NoElement = 8,
-        QuadElement = 9
-    }
-    enum ETargetType {
-        SingleEnemy = 0,
-        AllEnemies = 1,
-        Self = 2,
-        SingleAlly = 3,
-        AllAllies = 4,
-        DeadAlly = 5
-    }
-    enum EStat {
-        Attack = 0,
-        Magic = 1,
-        Defense = 2,
-        Health = 3,
-        Mana = 4,
-        CritChance = 5,
-        CritDamage = 6,
-        ManaRegen = 7,
-        AttackMagic = 8,
-        Damage = 9,
-        DamageReduction = 10
+    enum EquipmentType {
+        Weapon = 0,
+        Armor = 1,
+        Headgear = 2,
+        Necklace = 3,
+        Ring = 4,
+        Misc = 5
     }
     enum ESpecialBuff {
         Infinity = 0,
@@ -106,6 +85,27 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         Redirect = 10,
         PowerFocus = 11,
         Predation = 12
+    }
+    enum EStat {
+        Attack = 0,
+        Magic = 1,
+        Defense = 2,
+        Health = 3,
+        Mana = 4,
+        CritChance = 5,
+        CritDamage = 6,
+        ManaRegen = 7,
+        AttackMagic = 8,
+        Damage = 9,
+        DamageReduction = 10
+    }
+    enum ETargetType {
+        SingleEnemy = 0,
+        AllEnemies = 1,
+        Self = 2,
+        SingleAlly = 3,
+        AllAllies = 4,
+        DeadAlly = 5
     }
     interface EnumDetail {
         KeyValueObjects: KeyValueObject[];
@@ -157,12 +157,12 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         ConsumableProperties?: ConsumableProperties;
         IsFood?: boolean;
         FoodProperties?: FoodProperties;
-        IsCombatConsumable?: boolean;
-        CombatConsumableProperties?: CombatConsumableProperties;
-        IsKeyItem?: boolean;
-        KeyItemProperties?: KeyItemProperties;
         IsEquipmentCharge?: boolean;
         EquipmentChargeProperties?: EquipmentChargeProperties;
+        IsKeyItem?: boolean;
+        KeyItemProperties?: KeyItemProperties;
+        IsCombatConsumable?: boolean;
+        CombatConsumableProperties?: CombatConsumableProperties;
         IsCraftMaterial?: boolean;
         CraftMaterialProperties?: CraftMaterialProperties;
         IsEquipmentBloodVessel?: boolean;
@@ -205,12 +205,12 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         LootBoxProperties?: LootBoxProperties;
         IsEquipmentShield?: boolean;
         EquipmentShieldProperties?: EquipmentShieldProperties;
+        IsSkillPotion?: boolean;
+        SkillPotionProperties?: SkillPotionProperties;
         IsSkillResetter?: boolean;
-        SkillResetterProperties?: SkillResetterProperties;
+        SkillResetterProperties?: SkillPotionProperties;
         IsEquipmentDebuffOnGettingHit?: boolean;
         EquipmentDebuffOnGettingHitProperties?: EquipmentDebuffOnGettingHitProperties;
-        IsSkillPotion?: boolean;
-        SkillPotionProperties?: SkillResetterProperties;
         IsEquipmentThornTendril?: boolean;
         EquipmentThornTendrilProperties?: EquipmentThornTendrilProperties;
     }
@@ -223,7 +223,7 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         Chance: number;
         IsOnGettingAttacked: boolean;
     }
-    interface SkillResetterProperties {
+    interface SkillPotionProperties {
     }
     interface EquipmentShieldProperties {
         ShieldAmount: number;
@@ -346,20 +346,20 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         ManaRegenerated: number;
         IsOnAllyApplySpecialBuff: boolean;
     }
-    interface EquipmentChargeProperties {
-        ChargesCount: number;
-        ChargeType: number;
-        IsOnCombatStart: boolean;
-        IsOnTurnStart: boolean;
-    }
-    interface KeyItemProperties {
-        Area?: any;
-    }
     interface CombatConsumableProperties {
         EffectAction?: number;
         Icon: string;
         Description: string;
         RetreatItem: boolean;
+    }
+    interface KeyItemProperties {
+        Area?: any;
+    }
+    interface EquipmentChargeProperties {
+        ChargesCount: number;
+        ChargeType: number;
+        IsOnCombatStart: boolean;
+        IsOnTurnStart: boolean;
     }
     interface FoodProperties {
         Stat: EStat;
@@ -425,42 +425,90 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         Description: string;
         IsPassiveSkill?: boolean;
         PassiveSkillProperties?: PassiveSkillProperties;
-        IsPassiveHealCharging?: boolean;
-        PassiveHealChargingProperties?: PassiveHealChargingProperties;
-        IsPassiveManaPotential?: boolean;
-        PassiveManaPotentialProperties?: PassiveManaPotentialProperties;
+        IsPassiveEnlighten?: boolean;
+        PassiveEnlightenProperties?: PassiveEnlightenProperties;
+        IsPassiveCurseChain?: boolean;
+        PassiveCurseChainProperties?: PassiveCurseChainProperties;
         IsBaseAction?: boolean;
         BaseActionProperties?: BaseActionProperties;
         IsActionModifier?: boolean;
         ActionModifierProperties?: ActionModifierProperties;
         IsActionDamage?: boolean;
         ActionDamageProperties?: ActionDamageProperties;
-        IsActionHeal?: boolean;
-        ActionHealProperties?: ActionHealProperties;
+        IsActionSpecialBuff?: boolean;
+        ActionSpecialBuffProperties?: ActionSpecialBuffProperties;
         IsPassiveElementModifier?: boolean;
         PassiveElementModifierProperties?: PassiveElementModifierProperties;
         IsPassiveImproveStat?: boolean;
         PassiveImproveStatProperties?: PassiveImproveStatProperties;
+        IsPassiveSpecialBuffChance?: boolean;
+        PassiveSpecialBuffChanceProperties?: PassiveSpecialBuffChanceProperties;
+        IsPassiveInitialDarkness?: boolean;
+        PassiveInitialDarknessProperties?: PassiveInitialDarknessProperties;
+        IsPassiveTrueDarkness?: boolean;
+        PassiveTrueDarknessProperties?: PassiveTrueDarknessProperties;
+        IsPassiveDodging?: boolean;
+        PassiveDodgingProperties?: PassiveDodgingProperties;
+        IsPassiveUncanny?: boolean;
+        PassiveUncannyProperties?: PassiveUncannyProperties;
+        IsPassiveMartialProwess?: boolean;
+        PassiveMartialProwessProperties?: PassiveMartialProwessProperties;
+        IsPassiveComboMaster?: boolean;
+        PassiveComboMasterProperties?: PassiveComboMasterProperties;
+        IsPassiveCascade?: boolean;
+        PassiveCascadeProperties?: PassiveCascadeProperties;
+        IsPassiveStatic?: boolean;
+        PassiveStaticProperties?: PassiveStaticProperties;
+        IsPassiveTransfusion?: boolean;
+        PassiveTransfusionProperties?: PassiveTransfusionProperties;
+        IsActionHeal?: boolean;
+        ActionHealProperties?: ActionHealProperties;
+        IsActionRemoveDebuff?: boolean;
+        ActionRemoveDebuffProperties?: ActionRemoveDebuffProperties;
+        IsPassiveWarlockHealing?: boolean;
+        PassiveWarlockHealingProperties?: PassiveWarlockHealingProperties;
+        IsPassiveBlindingSupport?: boolean;
+        PassiveBlindingSupportProperties?: PassiveBlindingSupportProperties;
+        IsActionBuff?: boolean;
+        ActionBuffProperties?: ActionBuffProperties;
+        IsPassiveAssistance?: boolean;
+        PassiveAssistanceProperties?: PassiveWarlockHealingProperties;
+        IsPassiveIncreaseBuffStacks?: boolean;
+        PassiveIncreaseBuffStacksProperties?: PassiveIncreaseBuffStacksProperties;
+        IsPassiveComboHealing?: boolean;
+        PassiveComboHealingProperties?: PassiveComboHealingProperties;
+        IsActionDebuff?: boolean;
+        ActionDebuffProperties?: ActionDebuffProperties;
+        IsPassiveDebuffChance?: boolean;
+        PassiveDebuffChanceProperties?: PassiveDebuffChanceProperties;
+        IsPassiveCleanse?: boolean;
+        PassiveCleanseProperties?: PassiveCleanseProperties;
+        IsPassiveWeaponBreak?: boolean;
+        PassiveWeaponBreakProperties?: PassiveWeaponBreakProperties;
+        IsActionRemoveBuff?: boolean;
+        ActionRemoveBuffProperties?: ActionRemoveDebuffProperties;
+        IsPassiveAutoHeal?: boolean;
+        PassiveAutoHealProperties?: PassiveAutoHealProperties;
+        IsPassiveIncreaseDebuffStacks?: boolean;
+        PassiveIncreaseDebuffStacksProperties?: PassiveIncreaseDebuffStacksProperties;
+        IsPassiveBuffSteal?: boolean;
+        PassiveBuffStealProperties?: PassiveBuffStealProperties;
+        IsPassiveHealCharging?: boolean;
+        PassiveHealChargingProperties?: PassiveHealChargingProperties;
+        IsPassiveManaPotential?: boolean;
+        PassiveManaPotentialProperties?: PassiveManaPotentialProperties;
         IsPassiveAutoRestore?: boolean;
         PassiveAutoRestoreProperties?: PassiveAutoRestoreProperties;
         IsPassiveImproveStatDependant?: boolean;
         PassiveImproveStatDependantProperties?: PassiveImproveStatDependantProperties;
-        IsPassiveSpecialBuffChance?: boolean;
-        PassiveSpecialBuffChanceProperties?: PassiveSpecialBuffChanceProperties;
         IsPassiveStuckTight?: boolean;
         PassiveStuckTightProperties?: PassiveStuckTightProperties;
-        IsPassiveComboHealing?: boolean;
-        PassiveComboHealingProperties?: PassiveComboHealingProperties;
         IsActionDebuffOnHit?: boolean;
         ActionDebuffOnHitProperties?: ActionDebuffOnHitProperties;
         IsPassiveDisoriented?: boolean;
-        PassiveDisorientedProperties?: PassiveDisorientedProperties;
-        IsPassiveIncreaseDebuffStacks?: boolean;
-        PassiveIncreaseDebuffStacksProperties?: PassiveIncreaseDebuffStacksProperties;
+        PassiveDisorientedProperties?: PassiveUncannyProperties;
         IsPassiveRenewal?: boolean;
         PassiveRenewalProperties?: PassiveRenewalProperties;
-        IsPassiveComboMaster?: boolean;
-        PassiveComboMasterProperties?: PassiveComboMasterProperties;
         IsPassiveEquipmentFocus?: boolean;
         PassiveEquipmentFocusProperties?: PassiveEquipmentFocusProperties;
         IsPassiveBolster?: boolean;
@@ -475,12 +523,8 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveHealingLinkProperties?: PassiveHealingLinkProperties;
         IsPassiveSupply?: boolean;
         PassiveSupplyProperties?: PassiveSupplyProperties;
-        IsActionBuff?: boolean;
-        ActionBuffProperties?: ActionBuffProperties;
         IsPassiveChannelingSustain?: boolean;
         PassiveChannelingSustainProperties?: PassiveChannelingSustainProperties;
-        IsPassiveIncreaseBuffStacks?: boolean;
-        PassiveIncreaseBuffStacksProperties?: PassiveIncreaseBuffStacksProperties;
         IsPassiveManaCharging?: boolean;
         PassiveManaChargingProperties?: PassiveManaChargingProperties;
         IsPassiveMentor?: boolean;
@@ -489,22 +533,16 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveBuffingRestoreProperties?: PassiveBuffingRestoreProperties;
         IsPassiveChargingBuffs?: boolean;
         PassiveChargingBuffsProperties?: PassiveChargingBuffsProperties;
-        IsActionDebuff?: boolean;
-        ActionDebuffProperties?: ActionDebuffProperties;
         IsPassiveLifesteal?: boolean;
         PassiveLifestealProperties?: PassiveLifestealProperties;
         IsPassiveBleedOut?: boolean;
         PassiveBleedOutProperties?: ActionModifierProperties;
-        IsPassiveCascade?: boolean;
-        PassiveCascadeProperties?: PassiveCascadeProperties;
         IsPassiveHealMastery?: boolean;
         PassiveHealMasteryProperties?: PassiveHealMasteryProperties;
         IsPassiveCriticalHybridization?: boolean;
         PassiveCriticalHybridizationProperties?: PassiveCriticalHybridizationProperties;
         IsPassiveBleed?: boolean;
         PassiveBleedProperties?: PassiveBleedProperties;
-        IsPassiveDebuffChance?: boolean;
-        PassiveDebuffChanceProperties?: PassiveDebuffChanceProperties;
         IsPassiveSpecialBuffDamageModifier?: boolean;
         PassiveSpecialBuffDamageModifierProperties?: PassiveSpecialBuffDamageModifierProperties;
         IsPassiveHealingShield?: boolean;
@@ -525,8 +563,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveCongealProperties?: ActionModifierProperties;
         IsPassiveCriticalDefense?: boolean;
         PassiveCriticalDefenseProperties?: PassiveCriticalDefenseProperties;
-        IsPassiveAutoHeal?: boolean;
-        PassiveAutoHealProperties?: PassiveAutoHealProperties;
         IsPassiveStartCombatShield?: boolean;
         PassiveStartCombatShieldProperties?: PassiveStartCombatShieldProperties;
         IsActionRevive?: boolean;
@@ -537,18 +573,68 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveDualityProperties?: PassiveDualityProperties;
         IsPassiveSituationalSupport?: boolean;
         PassiveSituationalSupportProperties?: PassiveSituationalSupportProperties;
-        IsPassiveOverheal?: boolean;
-        PassiveOverhealProperties?: PassiveOverhealProperties;
-        IsActionSpecialBuff?: boolean;
-        ActionSpecialBuffProperties?: ActionSpecialBuffProperties;
-        IsPassiveAntitoxin?: boolean;
-        PassiveAntitoxinProperties?: PassiveAntitoxinProperties;
-        IsPassiveCleanse?: boolean;
-        PassiveCleanseProperties?: PassiveCleanseProperties;
-        IsPassiveWarlockHealing?: boolean;
-        PassiveWarlockHealingProperties?: PassiveWarlockHealingProperties;
+        IsPassiveCriticalApex?: boolean;
+        PassiveCriticalApexProperties?: PassiveStuckTightProperties;
+        IsPassiveMeditate?: boolean;
+        PassiveMeditateProperties?: PassiveMeditateProperties;
+        IsPassiveCriticalHeal?: boolean;
+        PassiveCriticalHealProperties?: ActionModifierProperties;
+        IsPassiveHeroicParty?: boolean;
+        PassiveHeroicPartyProperties?: PassiveHeroicPartyProperties;
+        IsPassivePathTo?: boolean;
+        PassivePathToProperties?: PassivePathToProperties;
+        IsPassivePunishment?: boolean;
+        PassivePunishmentProperties?: PassivePunishmentProperties;
+        IsPassiveHeroism?: boolean;
+        PassiveHeroismProperties?: PassiveHeroismProperties;
+        IsPassiveCriticalMass?: boolean;
+        PassiveCriticalMassProperties?: PassiveCriticalMassProperties;
+        IsPassiveEvasion?: boolean;
+        PassiveEvasionProperties?: PassiveEvasionProperties;
+        IsPassiveCleansingSidekick?: boolean;
+        PassiveCleansingSidekickProperties?: PassiveCleansingSidekickProperties;
+        IsPassiveAntiCascade?: boolean;
+        PassiveAntiCascadeProperties?: PassiveAntiCascadeProperties;
+        IsPassiveComboBuffing?: boolean;
+        PassiveComboBuffingProperties?: PassiveComboBuffingProperties;
+        IsPassiveAging?: boolean;
+        PassiveAgingProperties?: PassiveAgingProperties;
+        IsPassiveOutlast?: boolean;
+        PassiveOutlastProperties?: PassiveOutlastProperties;
+        IsPassiveCriticalBuff?: boolean;
+        PassiveCriticalBuffProperties?: PassiveCriticalBuffProperties;
+        IsPassiveAgeOfPurification?: boolean;
+        PassiveAgeOfPurificationProperties?: PassiveAgeOfPurificationProperties;
+        IsActionShield?: boolean;
+        ActionShieldProperties?: ActionShieldProperties;
+        IsPassivePhoenixAffinity?: boolean;
+        PassivePhoenixAffinityProperties?: PassivePhoenixAffinityProperties;
+        IsPassiveNecromancy?: boolean;
+        PassiveNecromancyProperties?: PassiveNecromancyProperties;
+        IsPassiveShieldAura?: boolean;
+        PassiveShieldAuraProperties?: PassiveShieldAuraProperties;
+        IsPassiveHexingSupport?: boolean;
+        PassiveHexingSupportProperties?: PassiveAgingProperties;
         IsPassiveStartCombatDebuff?: boolean;
         PassiveStartCombatDebuffProperties?: PassiveStartCombatDebuffProperties;
+        IsPassiveArmorBypass?: boolean;
+        PassiveArmorBypassProperties?: PassiveArmorBypassProperties;
+        IsPassiveBloodDrive?: boolean;
+        PassiveBloodDriveProperties?: PassiveBloodDriveProperties;
+        IsActionTypeRestriction?: boolean;
+        ActionTypeRestrictionProperties?: ActionTypeRestrictionProperties;
+        IsPassiveFeast?: boolean;
+        PassiveFeastProperties?: PassiveFeastProperties;
+        IsPassiveSaboteursShield?: boolean;
+        PassiveSaboteursShieldProperties?: PassiveSaboteursShieldProperties;
+        IsActionShieldBurst?: boolean;
+        ActionShieldBurstProperties?: ActionShieldBurstProperties;
+        IsPassivePrecision?: boolean;
+        PassivePrecisionProperties?: PassivePrecisionProperties;
+        IsPassiveOverheal?: boolean;
+        PassiveOverhealProperties?: PassiveOverhealProperties;
+        IsPassiveAntitoxin?: boolean;
+        PassiveAntitoxinProperties?: PassiveAntitoxinProperties;
         IsActionConditionalDamage?: boolean;
         ActionConditionalDamageProperties?: ActionConditionalDamageProperties;
         IsPassiveSevereUpkeep?: boolean;
@@ -567,46 +653,14 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveExtraBuffProperties?: PassiveExtraBuffProperties;
         IsPassiveChannelingBalance?: boolean;
         PassiveChannelingBalanceProperties?: PassiveChannelingBalanceProperties;
-        IsPassiveComboBuffing?: boolean;
-        PassiveComboBuffingProperties?: PassiveComboBuffingProperties;
         IsPassiveBuffingHeal?: boolean;
         PassiveBuffingHealProperties?: PassiveBuffingHealProperties;
         IsPassiveBuffingShield?: boolean;
         PassiveBuffingShieldProperties?: PassiveBuffingShieldProperties;
-        IsPassiveAssistance?: boolean;
-        PassiveAssistanceProperties?: PassiveWarlockHealingProperties;
-        IsActionShield?: boolean;
-        ActionShieldProperties?: ActionShieldProperties;
-        IsPassivePhoenixAffinity?: boolean;
-        PassivePhoenixAffinityProperties?: PassivePhoenixAffinityProperties;
-        IsPassiveNecromancy?: boolean;
-        PassiveNecromancyProperties?: PassiveNecromancyProperties;
-        IsPassiveShieldAura?: boolean;
-        PassiveShieldAuraProperties?: PassiveShieldAuraProperties;
-        IsPassiveHexingSupport?: boolean;
-        PassiveHexingSupportProperties?: PassiveHexingSupportProperties;
-        IsPassiveArmorBypass?: boolean;
-        PassiveArmorBypassProperties?: PassiveArmorBypassProperties;
-        IsPassiveBloodDrive?: boolean;
-        PassiveBloodDriveProperties?: PassiveBloodDriveProperties;
-        IsActionTypeRestriction?: boolean;
-        ActionTypeRestrictionProperties?: ActionTypeRestrictionProperties;
-        IsPassiveFeast?: boolean;
-        PassiveFeastProperties?: PassiveFeastProperties;
-        IsPassiveSaboteursShield?: boolean;
-        PassiveSaboteursShieldProperties?: PassiveSaboteursShieldProperties;
-        IsActionShieldBurst?: boolean;
-        ActionShieldBurstProperties?: ActionShieldBurstProperties;
-        IsPassiveTransfusion?: boolean;
-        PassiveTransfusionProperties?: PassiveTransfusionProperties;
-        IsPassivePrecision?: boolean;
-        PassivePrecisionProperties?: PassivePrecisionProperties;
         IsPassiveEquipmentSlot?: boolean;
         PassiveEquipmentSlotProperties?: PassiveEquipmentSlotProperties;
         IsPassiveHeroicDefense?: boolean;
         PassiveHeroicDefenseProperties?: PassiveHeroicDefenseProperties;
-        IsPassiveHeroicParty?: boolean;
-        PassiveHeroicPartyProperties?: PassiveHeroicPartyProperties;
         IsPassiveBuffMultiplier?: boolean;
         PassiveBuffMultiplierProperties?: PassiveBuffMultiplierProperties;
         IsPassiveRecuperate?: boolean;
@@ -615,8 +669,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveDemonicTheftProperties?: PassiveDemonicTheftProperties;
         IsPassiveDoubleStrike?: boolean;
         PassiveDoubleStrikeProperties?: PassiveDoubleStrikeProperties;
-        IsPassiveMeditate?: boolean;
-        PassiveMeditateProperties?: PassiveMeditateProperties;
         IsPassiveKillingDance?: boolean;
         PassiveKillingDanceProperties?: PassiveMeditateProperties;
         IsPassiveBlacksmithing?: boolean;
@@ -641,8 +693,38 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveCopyShieldProperties?: PassiveCopyShieldProperties;
         IsPassiveComboShielding?: boolean;
         PassiveComboShieldingProperties?: PassiveComboShieldingProperties;
-        IsActionRemoveDebuff?: boolean;
-        ActionRemoveDebuffProperties?: ActionRemoveDebuffProperties;
+        IsPassiveShadowProc?: boolean;
+        PassiveShadowProcProperties?: PassiveShadowProcProperties;
+        IsActionRemoveStacks?: boolean;
+        ActionRemoveStacksProperties?: ActionRemoveDebuffProperties;
+        IsPassiveChord?: boolean;
+        PassiveChordProperties?: PassiveChordProperties;
+        IsPassiveExploit?: boolean;
+        PassiveExploitProperties?: PassiveExploitProperties;
+        IsPassiveSharedBuff?: boolean;
+        PassiveSharedBuffProperties?: PassiveSharedBuffProperties;
+        IsPassiveGloriousSpark?: boolean;
+        PassiveGloriousSparkProperties?: PassiveGloriousSparkProperties;
+        IsMightyBoost?: boolean;
+        MightyBoostProperties?: MightyBoostProperties;
+        IsPassiveBuffCorruption?: boolean;
+        PassiveBuffCorruptionProperties?: PassiveBuffCorruptionProperties;
+        IsPassiveCriticalBoon?: boolean;
+        PassiveCriticalBoonProperties?: PassiveCriticalBoonProperties;
+        IsPassiveSteampunk?: boolean;
+        PassiveSteampunkProperties?: PassiveSteampunkProperties;
+        IsPassiveComboInitiator?: boolean;
+        PassiveComboInitiatorProperties?: PassiveComboInitiatorProperties;
+        IsPassivePreparation?: boolean;
+        PassivePreparationProperties?: PassiveInitialDarknessProperties;
+        IsPassiveDominance?: boolean;
+        PassiveDominanceProperties?: PassiveDominanceProperties;
+        IsPassiveToxicSupport?: boolean;
+        PassiveToxicSupportProperties?: PassiveToxicSupportProperties;
+        IsPassivePlague?: boolean;
+        PassivePlagueProperties?: PassivePlagueProperties;
+        IsPassiveCorrosion?: boolean;
+        PassiveCorrosionProperties?: PassiveCorrosionProperties;
         IsPassiveLeadership?: boolean;
         PassiveLeadershipProperties?: PassiveLeadershipProperties;
         IsPassiveManaConflux?: boolean;
@@ -653,8 +735,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveHardShieldProperties?: PassiveHardShieldProperties;
         IsPassiveMagicAttack?: boolean;
         PassiveMagicAttackProperties?: PassiveMagicAttackProperties;
-        IsPassiveSharedBuff?: boolean;
-        PassiveSharedBuffProperties?: PassiveSharedBuffProperties;
         IsPassiveElementAffinity?: boolean;
         PassiveElementAffinityProperties?: PassiveElementAffinityProperties;
         IsPassiveCriticalSorcery?: boolean;
@@ -669,128 +749,66 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveSpreadDebuffProperties?: PassiveSpreadDebuffProperties;
         IsPassiveElectrolytes?: boolean;
         PassiveElectrolytesProperties?: PassiveElectrolytesProperties;
-        IsPassiveHeroism?: boolean;
-        PassiveHeroismProperties?: PassiveHeroismProperties;
         IsPassiveRevenge?: boolean;
         PassiveRevengeProperties?: PassiveRevengeProperties;
         IsPassiveChargingShield?: boolean;
         PassiveChargingShieldProperties?: PassiveChargingShieldProperties;
-        IsPassiveShadowProc?: boolean;
-        PassiveShadowProcProperties?: PassiveShadowProcProperties;
-        IsActionRemoveStacks?: boolean;
-        ActionRemoveStacksProperties?: ActionRemoveDebuffProperties;
-        IsPassiveChord?: boolean;
-        PassiveChordProperties?: PassiveChordProperties;
-        IsPassiveExploit?: boolean;
-        PassiveExploitProperties?: PassiveExploitProperties;
-        IsPassiveGloriousSpark?: boolean;
-        PassiveGloriousSparkProperties?: PassiveGloriousSparkProperties;
-        IsMightyBoost?: boolean;
-        MightyBoostProperties?: MightyBoostProperties;
-        IsPassiveBuffCorruption?: boolean;
-        PassiveBuffCorruptionProperties?: PassiveBuffCorruptionProperties;
-        IsPassiveCriticalBoon?: boolean;
-        PassiveCriticalBoonProperties?: PassiveCriticalBoonProperties;
-        IsPassiveCurseChain?: boolean;
-        PassiveCurseChainProperties?: PassiveCurseChainProperties;
-        IsPassiveSteampunk?: boolean;
-        PassiveSteampunkProperties?: PassiveSteampunkProperties;
-        IsPassiveComboInitiator?: boolean;
-        PassiveComboInitiatorProperties?: PassiveComboInitiatorProperties;
-        IsPassivePreparation?: boolean;
-        PassivePreparationProperties?: PassivePreparationProperties;
-        IsPassiveDominance?: boolean;
-        PassiveDominanceProperties?: PassiveDominanceProperties;
-        IsPassiveToxicSupport?: boolean;
-        PassiveToxicSupportProperties?: PassiveToxicSupportProperties;
-        IsPassivePlague?: boolean;
-        PassivePlagueProperties?: PassivePlagueProperties;
-        IsPassiveCorrosion?: boolean;
-        PassiveCorrosionProperties?: PassiveCorrosionProperties;
-        IsPassiveDivineShield?: boolean;
-        PassiveDivineShieldProperties?: PassiveDivineShieldProperties;
-        IsPassiveFirstImpact?: boolean;
-        PassiveFirstImpactProperties?: PassiveFirstImpactProperties;
-        IsPassiveShatter?: boolean;
-        PassiveShatterProperties?: PassiveShatterProperties;
-        IsPassiveBerserk?: boolean;
-        PassiveBerserkProperties?: PassiveBerserkProperties;
-        IsPassiveEmergencyChannel?: boolean;
-        PassiveEmergencyChannelProperties?: PassiveEmergencyChannelProperties;
-        IsPassiveSingleStrike?: boolean;
-        PassiveSingleStrikeProperties?: PassiveSingleStrikeProperties;
-        IsPassiveCriticalConsistency?: boolean;
-        PassiveCriticalConsistencyProperties?: PassiveCriticalConsistencyProperties;
-        IsPassiveImprovedAssault?: boolean;
-        PassiveImprovedAssaultProperties?: PassiveHeroicPartyProperties;
-        IsPassiveSpawnOfChampions?: boolean;
-        PassiveSpawnOfChampionsProperties?: PassiveSpawnOfChampionsProperties;
-        IsPassiveMystify?: boolean;
-        PassiveMystifyProperties?: PassiveMystifyProperties;
-        IsPassiveSevereHit?: boolean;
-        PassiveSevereHitProperties?: PassiveSevereHitProperties;
-        IsActionRemoveBuff?: boolean;
-        ActionRemoveBuffProperties?: ActionRemoveDebuffProperties;
-        IsPassiveEnlighten?: boolean;
-        PassiveEnlightenProperties?: PassiveEnlightenProperties;
-        IsPassiveInitialDarkness?: boolean;
-        PassiveInitialDarknessProperties?: PassivePreparationProperties;
-        IsPassiveTrueDarkness?: boolean;
-        PassiveTrueDarknessProperties?: PassiveTrueDarknessProperties;
-        IsPassiveDodging?: boolean;
-        PassiveDodgingProperties?: PassiveDodgingProperties;
-        IsPassiveUncanny?: boolean;
-        PassiveUncannyProperties?: PassiveDisorientedProperties;
-        IsPassiveMartialProwess?: boolean;
-        PassiveMartialProwessProperties?: PassiveMartialProwessProperties;
-        IsPassiveStatic?: boolean;
-        PassiveStaticProperties?: PassiveStaticProperties;
-        IsPassiveBlindingSupport?: boolean;
-        PassiveBlindingSupportProperties?: PassiveBlindingSupportProperties;
-        IsPassiveWeaponBreak?: boolean;
-        PassiveWeaponBreakProperties?: PassiveWeaponBreakProperties;
-        IsPassiveBuffSteal?: boolean;
-        PassiveBuffStealProperties?: PassiveBuffStealProperties;
-        IsPassiveCriticalApex?: boolean;
-        PassiveCriticalApexProperties?: PassiveStuckTightProperties;
-        IsPassiveCriticalHeal?: boolean;
-        PassiveCriticalHealProperties?: ActionModifierProperties;
-        IsPassivePathTo?: boolean;
-        PassivePathToProperties?: PassivePathToProperties;
-        IsPassivePunishment?: boolean;
-        PassivePunishmentProperties?: PassivePunishmentProperties;
-        IsPassiveCriticalMass?: boolean;
-        PassiveCriticalMassProperties?: PassiveCriticalMassProperties;
-        IsPassiveEvasion?: boolean;
-        PassiveEvasionProperties?: PassiveEvasionProperties;
-        IsPassiveCleansingSidekick?: boolean;
-        PassiveCleansingSidekickProperties?: PassiveCleansingSidekickProperties;
-        IsPassiveAntiCascade?: boolean;
-        PassiveAntiCascadeProperties?: PassiveAntiCascadeProperties;
-        IsPassiveAging?: boolean;
-        PassiveAgingProperties?: PassiveHexingSupportProperties;
-        IsPassiveOutlast?: boolean;
-        PassiveOutlastProperties?: PassiveOutlastProperties;
-        IsPassiveCriticalBuff?: boolean;
-        PassiveCriticalBuffProperties?: PassiveCriticalBuffProperties;
-        IsPassiveAgeOfPurification?: boolean;
-        PassiveAgeOfPurificationProperties?: PassiveAgeOfPurificationProperties;
+        IsPassiveChargedUp?: boolean;
+        PassiveChargedUpProperties?: PassiveChargedUpProperties;
+        IsPassiveDevour?: boolean;
+        PassiveDevourProperties?: PassiveDevourProperties;
+        IsPassiveStartCombatCharges?: boolean;
+        PassiveStartCombatChargesProperties?: PassiveStartCombatChargesProperties;
+        IsPassiveCriticalEdge?: boolean;
+        PassiveCriticalEdgeProperties?: PassiveCriticalEdgeProperties;
+        IsPassiveSplatter?: boolean;
+        PassiveSplatterProperties?: PassiveSplatterProperties;
+        IsPassiveBrawnOverBrains?: boolean;
+        PassiveBrawnOverBrainsProperties?: ActionModifierProperties;
         IsPassiveUtopia?: boolean;
         PassiveUtopiaProperties?: PassiveUtopiaProperties;
         IsPassiveRelentless?: boolean;
         PassiveRelentlessProperties?: PassiveRelentlessProperties;
+        IsPassiveFirstImpact?: boolean;
+        PassiveFirstImpactProperties?: PassiveFirstImpactProperties;
+        IsPassiveCriticalConsistency?: boolean;
+        PassiveCriticalConsistencyProperties?: PassiveCriticalConsistencyProperties;
         IsPassiveManaGenerator?: boolean;
         PassiveManaGeneratorProperties?: PassiveManaGeneratorProperties;
         IsPassiveKingOfBeasts?: boolean;
         PassiveKingOfBeastsProperties?: PassiveKingOfBeastsProperties;
+        IsPassiveSevereHit?: boolean;
+        PassiveSevereHitProperties?: PassiveSevereHitProperties;
+        IsPassiveBerserk?: boolean;
+        PassiveBerserkProperties?: PassiveBerserkProperties;
         IsPassiveObserve?: boolean;
         PassiveObserveProperties?: PassiveObserveProperties;
-        IsPassiveBrawnOverBrains?: boolean;
-        PassiveBrawnOverBrainsProperties?: ActionModifierProperties;
         IsPassiveEnergyConversion?: boolean;
         PassiveEnergyConversionProperties?: PassiveEnergyConversionProperties;
+        IsPassiveImprovedAssault?: boolean;
+        PassiveImprovedAssaultProperties?: PassiveHeroicPartyProperties;
         IsPassiveForcefulBuff?: boolean;
         PassiveForcefulBuffProperties?: PassiveForcefulBuffProperties;
+        IsPassiveImproveBuff?: boolean;
+        PassiveImproveBuffProperties?: PassiveImproveBuffProperties;
+        IsPassiveEmpower?: boolean;
+        PassiveEmpowerProperties?: PassiveEmpowerProperties;
+        IsPassiveProtector?: boolean;
+        PassiveProtectorProperties?: PassiveProtectorProperties;
+        IsPassiveManeki?: boolean;
+        PassiveManekiProperties?: PassiveCriticalBoonProperties;
+        IsPassiveDivineShield?: boolean;
+        PassiveDivineShieldProperties?: PassiveDivineShieldProperties;
+        IsPassiveShatter?: boolean;
+        PassiveShatterProperties?: PassiveShatterProperties;
+        IsPassiveEmergencyChannel?: boolean;
+        PassiveEmergencyChannelProperties?: PassiveEmergencyChannelProperties;
+        IsPassiveSingleStrike?: boolean;
+        PassiveSingleStrikeProperties?: PassiveSingleStrikeProperties;
+        IsPassiveSpawnOfChampions?: boolean;
+        PassiveSpawnOfChampionsProperties?: PassiveSpawnOfChampionsProperties;
+        IsPassiveMystify?: boolean;
+        PassiveMystifyProperties?: PassiveMystifyProperties;
         IsPassiveBuffMastery?: boolean;
         PassiveBuffMasteryProperties?: ActionModifierProperties;
         IsPassiveDebuffMastery?: boolean;
@@ -809,32 +827,20 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveProliferateProperties?: PassiveProliferateProperties;
         IsPassiveSidekickSupport?: boolean;
         PassiveSidekickSupportProperties?: PassiveSidekickSupportProperties;
-        IsPassiveChargedUp?: boolean;
-        PassiveChargedUpProperties?: PassiveChargedUpProperties;
-        IsPassiveDevour?: boolean;
-        PassiveDevourProperties?: PassiveDevourProperties;
-        IsPassiveStartCombatCharges?: boolean;
-        PassiveStartCombatChargesProperties?: PassiveStartCombatChargesProperties;
-        IsPassiveCriticalEdge?: boolean;
-        PassiveCriticalEdgeProperties?: PassiveCriticalEdgeProperties;
-        IsPassiveSplatter?: boolean;
-        PassiveSplatterProperties?: PassiveSplatterProperties;
+        IsPassiveAssaultShield?: boolean;
+        PassiveAssaultShieldProperties?: PassiveAssaultShieldProperties;
+        IsPassiveMagnetize?: boolean;
+        PassiveMagnetizeProperties?: PassiveMagnetizeProperties;
         IsActionRedirect?: boolean;
         ActionRedirectProperties?: ActionRedirectProperties;
-        IsPassiveImproveBuff?: boolean;
-        PassiveImproveBuffProperties?: PassiveImproveBuffProperties;
+        IsPassiveChainReaction?: boolean;
+        PassiveChainReactionProperties?: PassiveChainReactionProperties;
         IsPassiveReflect?: boolean;
         PassiveReflectProperties?: PassiveReflectProperties;
         IsPassiveDisarmingShielding?: boolean;
         PassiveDisarmingShieldingProperties?: PassiveDisarmingShieldingProperties;
         IsPassiveVolatileShield?: boolean;
         PassiveVolatileShieldProperties?: PassiveVolatileShieldProperties;
-        IsPassiveEmpower?: boolean;
-        PassiveEmpowerProperties?: PassiveEmpowerProperties;
-        IsPassiveProtector?: boolean;
-        PassiveProtectorProperties?: PassiveProtectorProperties;
-        IsPassiveManeki?: boolean;
-        PassiveManekiProperties?: PassiveCriticalBoonProperties;
         IsPassiveShieldCrush?: boolean;
         PassiveShieldCrushProperties?: PassiveShieldCrushProperties;
         IsPassiveElementalBreak?: boolean;
@@ -847,14 +853,8 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveGiantsbaneProperties?: PassiveGiantsbaneProperties;
         IsPassiveAeons?: boolean;
         PassiveAeonsProperties?: PassiveAeonsProperties;
-        IsPassiveHeroicAssault?: boolean;
-        PassiveHeroicAssaultProperties?: PassiveHeroicAssaultProperties;
-        IsPassiveTaunt?: boolean;
-        PassiveTauntProperties?: PassiveTauntProperties;
-        IsPassiveSensitivity?: boolean;
-        PassiveSensitivityProperties?: PassiveDominanceProperties;
         IsPassivePredation?: boolean;
-        PassivePredationProperties?: PassiveHexingSupportProperties;
+        PassivePredationProperties?: PassiveAgingProperties;
         IsPassiveManaBolster?: boolean;
         PassiveManaBolsterProperties?: PassiveManaBolsterProperties;
         IsPassiveStaticGlory?: boolean;
@@ -863,12 +863,12 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveSprawlProperties?: PassiveSprawlProperties;
         IsPassiveReflectBleed?: boolean;
         PassiveReflectBleedProperties?: PassiveReflectBleedProperties;
-        IsPassiveMagnetize?: boolean;
-        PassiveMagnetizeProperties?: PassiveMagnetizeProperties;
-        IsPassiveChainReaction?: boolean;
-        PassiveChainReactionProperties?: PassiveChainReactionProperties;
-        IsPassiveAssaultShield?: boolean;
-        PassiveAssaultShieldProperties?: PassiveAssaultShieldProperties;
+        IsPassiveHeroicAssault?: boolean;
+        PassiveHeroicAssaultProperties?: PassiveHeroicAssaultProperties;
+        IsPassiveTaunt?: boolean;
+        PassiveTauntProperties?: PassiveTauntProperties;
+        IsPassiveSensitivity?: boolean;
+        PassiveSensitivityProperties?: PassiveDominanceProperties;
         IsSorceryBoost?: boolean;
         SorceryBoostProperties?: SorceryBoostProperties;
         IsPassiveDraconicLineage?: boolean;
@@ -877,10 +877,18 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveDragonBloodProperties?: PassiveDragonBloodProperties;
         IsPassiveCurseTransfusion?: boolean;
         PassiveCurseTransfusionProperties?: PassiveCurseTransfusionProperties;
-        IsPassiveTenaciousBarrier?: boolean;
-        PassiveTenaciousBarrierProperties?: PassiveTenaciousBarrierProperties;
-        IsPassiveProtectedOffense?: boolean;
-        PassiveProtectedOffenseProperties?: PassiveHeroicPartyProperties;
+        IsPassiveDragonMastery?: boolean;
+        PassiveDragonMasteryProperties?: PassiveDragonMasteryProperties;
+        IsPassiveSubZero?: boolean;
+        PassiveSubZeroProperties?: PassiveDominanceProperties;
+        IsPassiveEternalHeart?: boolean;
+        PassiveEternalHeartProperties?: PassiveEternalHeartProperties;
+        IsPassiveGainBuff?: boolean;
+        PassiveGainBuffProperties?: PassiveGainBuffProperties;
+        IsPassiveDemotivate?: boolean;
+        PassiveDemotivateProperties?: PassiveDemotivateProperties;
+        IsPassiveRestoration?: boolean;
+        PassiveRestorationProperties?: PassiveRestorationProperties;
         IsPassiveManaDonor?: boolean;
         PassiveManaDonorProperties?: PassiveManaDonorProperties;
         IsPassiveManaBuffer?: boolean;
@@ -895,96 +903,90 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveBrainsOverBrawnProperties?: ActionModifierProperties;
         IsPassiveStunned?: boolean;
         PassiveStunnedProperties?: PassiveStunnedProperties;
-        IsPassiveEternalHeart?: boolean;
-        PassiveEternalHeartProperties?: PassiveEternalHeartProperties;
-        IsPassiveGainBuff?: boolean;
-        PassiveGainBuffProperties?: PassiveGainBuffProperties;
-        IsPassiveDemotivate?: boolean;
-        PassiveDemotivateProperties?: PassiveDemotivateProperties;
-        IsPassiveRestoration?: boolean;
-        PassiveRestorationProperties?: PassiveRestorationProperties;
+        IsPassiveTenaciousBarrier?: boolean;
+        PassiveTenaciousBarrierProperties?: PassiveTenaciousBarrierProperties;
+        IsPassiveProtectedOffense?: boolean;
+        PassiveProtectedOffenseProperties?: PassiveHeroicPartyProperties;
         IsPassiveSupremacy?: boolean;
         PassiveSupremacyProperties?: PassiveSupremacyProperties;
-        IsPoisonedNerves?: boolean;
-        PoisonedNervesProperties?: PoisonedNervesProperties;
-        IsPassiveDragonMastery?: boolean;
-        PassiveDragonMasteryProperties?: PassiveDragonMasteryProperties;
-        IsPassiveSubZero?: boolean;
-        PassiveSubZeroProperties?: PassiveDominanceProperties;
         IsPassiveShiftNeutralElement?: boolean;
         PassiveShiftNeutralElementProperties?: PassiveShiftNeutralElementProperties;
+        IsPoisonedNerves?: boolean;
+        PoisonedNervesProperties?: PoisonedNervesProperties;
+        IsPassiveCurseResistance?: boolean;
+        PassiveCurseResistanceProperties?: PassiveCurseResistanceProperties;
         IsPassiveDiseaseControl?: boolean;
         PassiveDiseaseControlProperties?: PassiveHardShieldProperties;
+        IsPassiveChargingDebuffs?: boolean;
+        PassiveChargingDebuffsProperties?: PassiveChargingDebuffsProperties;
+        IsPassiveStickFocus?: boolean;
+        PassiveStickFocusProperties?: PassiveStickFocusProperties;
         IsPassiveManaBurn?: boolean;
         PassiveManaBurnProperties?: PassiveManaBurnProperties;
         IsPassiveLoadUp?: boolean;
         PassiveLoadUpProperties?: PassiveLoadUpProperties;
         IsPassiveDebuffTriggersDebuff?: boolean;
         PassiveDebuffTriggersDebuffProperties?: PassiveDebuffTriggersDebuffProperties;
-        IsPassiveStickFocus?: boolean;
-        PassiveStickFocusProperties?: PassiveStickFocusProperties;
-        IsPassiveCurseResistance?: boolean;
-        PassiveCurseResistanceProperties?: PassiveCurseResistanceProperties;
+        IsPassiveRegenerationShield?: boolean;
+        PassiveRegenerationShieldProperties?: PassiveRegenerationShieldProperties;
+        IsPassiveBrokenImmunity?: boolean;
+        PassiveBrokenImmunityProperties?: PassiveBrokenImmunityProperties;
         IsPassiveGoblinScience?: boolean;
         PassiveGoblinScienceProperties?: PassiveGoblinScienceProperties;
-        IsPassiveChargingDebuffs?: boolean;
-        PassiveChargingDebuffsProperties?: PassiveChargingDebuffsProperties;
         IsPassiveFuel?: boolean;
         PassiveFuelProperties?: PassiveFuelProperties;
         IsPassiveSupercharged?: boolean;
         PassiveSuperchargedProperties?: PassiveSuperchargedProperties;
-        IsPassiveCriticalExploit?: boolean;
-        PassiveCriticalExploitProperties?: PassiveCenterOfMassProperties;
-        IsPassiveAcidSpit?: boolean;
-        PassiveAcidSpitProperties?: PassiveAcidSpitProperties;
         IsPassiveSlowBurn?: boolean;
         PassiveSlowBurnProperties?: ActionModifierProperties;
         IsPassiveBurnDown?: boolean;
         PassiveBurnDownProperties?: PassiveBurnDownProperties;
         IsPassiveRebornFromAshes?: boolean;
         PassiveRebornFromAshesProperties?: PassiveRebornFromAshesProperties;
-        IsPassiveFatalUpkeep?: boolean;
-        PassiveFatalUpkeepProperties?: PassiveBurnDownProperties;
-        IsPassiveSlimeSupport?: boolean;
-        PassiveSlimeSupportProperties?: PassiveSlimeSupportProperties;
-        IsPassiveTricksterBuffing?: boolean;
-        PassiveTricksterBuffingProperties?: PassiveBuffingRestoreProperties;
-        IsPassiveRegenerationShield?: boolean;
-        PassiveRegenerationShieldProperties?: PassiveRegenerationShieldProperties;
-        IsPassiveScreech?: boolean;
-        PassiveScreechProperties?: PassiveScreechProperties;
-        IsPassiveThickSkin?: boolean;
-        PassiveThickSkinProperties?: PassiveThickSkinProperties;
         IsPassiveSevereNature?: boolean;
         PassiveSevereNatureProperties?: PassiveSevereNatureProperties;
         IsPassiveSevereInfection?: boolean;
         PassiveSevereInfectionProperties?: PassiveSevereInfectionProperties;
-        IsPassiveBrokenImmunity?: boolean;
-        PassiveBrokenImmunityProperties?: PassiveBrokenImmunityProperties;
+        IsPassiveCriticalExploit?: boolean;
+        PassiveCriticalExploitProperties?: PassiveCenterOfMassProperties;
+        IsPassiveAcidSpit?: boolean;
+        PassiveAcidSpitProperties?: PassiveAcidSpitProperties;
+        IsPassiveSlimeSupport?: boolean;
+        PassiveSlimeSupportProperties?: PassiveSlimeSupportProperties;
+        IsPassiveFatalUpkeep?: boolean;
+        PassiveFatalUpkeepProperties?: PassiveBurnDownProperties;
+        IsPassiveTricksterBuffing?: boolean;
+        PassiveTricksterBuffingProperties?: PassiveBuffingRestoreProperties;
+        IsPassiveScreech?: boolean;
+        PassiveScreechProperties?: PassiveScreechProperties;
+        IsPassiveThickSkin?: boolean;
+        PassiveThickSkinProperties?: PassiveThickSkinProperties;
+        IsPassiveBurningFaith?: boolean;
+        PassiveBurningFaithProperties?: PassiveBurningFaithProperties;
+        IsPassiveOccultControl?: boolean;
+        PassiveOccultControlProperties?: PassiveOccultControlProperties;
+        IsActionDebuffCataclyst?: boolean;
+        ActionDebuffCataclystProperties?: ActionDebuffCataclystProperties;
         IsPassiveManaFunnel?: boolean;
         PassiveManaFunnelProperties?: PassiveManaFunnelProperties;
         IsPassiveBuffCelebration?: boolean;
         PassiveBuffCelebrationProperties?: PassiveBuffCelebrationProperties;
         IsPassiveImpactfulShock?: boolean;
         PassiveImpactfulShockProperties?: PassiveImpactfulShockProperties;
-        IsPassiveOccultControl?: boolean;
-        PassiveOccultControlProperties?: PassiveOccultControlProperties;
-        IsActionDebuffCataclyst?: boolean;
-        ActionDebuffCataclystProperties?: ActionDebuffCataclystProperties;
         IsPassiveCleansingBurn?: boolean;
         PassiveCleansingBurnProperties?: PassiveCleansingBurnProperties;
-        IsPassiveBurningFaith?: boolean;
-        PassiveBurningFaithProperties?: PassiveBurningFaithProperties;
+        IsPassivePrimalRage?: boolean;
+        PassivePrimalRageProperties?: PassivePrimalRageProperties;
         IsPassiveStampede?: boolean;
         PassiveStampedeProperties?: PassiveStampedeProperties;
         IsPassiveFieryGlands?: boolean;
         PassiveFieryGlandsProperties?: PassiveFieryGlandsProperties;
         IsPassiveMagicBarrier?: boolean;
         PassiveMagicBarrierProperties?: PassiveMagicBarrierProperties;
-        IsPassiveCounterHit?: boolean;
-        PassiveCounterHitProperties?: PassiveCounterHitProperties;
         IsPassiveRingFocus?: boolean;
         PassiveRingFocusProperties?: PassiveCenterOfMassProperties;
+        IsPassiveCounterHit?: boolean;
+        PassiveCounterHitProperties?: PassiveCounterHitProperties;
         IsPassiveCombatGuard?: boolean;
         PassiveCombatGuardProperties?: PassiveCombatGuardProperties;
         IsPassiveHibernate?: boolean;
@@ -995,16 +997,10 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveBlindingSparksProperties?: PassiveBlindingSparksProperties;
         IsPassiveTrimageHealing?: boolean;
         PassiveTrimageHealingProperties?: PassiveWarlockHealingProperties;
-        IsPassivePrimalRage?: boolean;
-        PassivePrimalRageProperties?: PassivePrimalRageProperties;
         IsPassiveShockCharging?: boolean;
         PassiveShockChargingProperties?: PassiveShockChargingProperties;
         IsPassiveChargedHealing?: boolean;
         PassiveChargedHealingProperties?: PassiveChargedHealingProperties;
-        IsPassiveElementalShift?: boolean;
-        PassiveElementalShiftProperties?: PassiveElementalShiftProperties;
-        IsPassiveGorgeousPlumage?: boolean;
-        PassiveGorgeousPlumageProperties?: PassiveGorgeousPlumageProperties;
         IsPassiveDebuffVariety?: boolean;
         PassiveDebuffVarietyProperties?: PassiveDebuffVarietyProperties;
         IsPassiveSkirmish?: boolean;
@@ -1013,6 +1009,10 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassiveInfernalRoarProperties?: PassiveInfernalRoarProperties;
         IsPassiveAncientPredation?: boolean;
         PassiveAncientPredationProperties?: PassiveAncientPredationProperties;
+        IsPassiveElementalShift?: boolean;
+        PassiveElementalShiftProperties?: PassiveElementalShiftProperties;
+        IsPassiveGorgeousPlumage?: boolean;
+        PassiveGorgeousPlumageProperties?: PassiveGorgeousPlumageProperties;
         IsPassiveJollySpirit?: boolean;
         PassiveJollySpiritProperties?: PassiveRelentlessProperties;
         IsPassiveTricksterSpirit?: boolean;
@@ -1029,20 +1029,14 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PassivePollutedWaterProperties?: PassivePollutedWaterProperties;
         IsPassiveMasterOfTime?: boolean;
         PassiveMasterOfTimeProperties?: PassiveMasterOfTimeProperties;
+        IsPassiveLordOfTheDeep?: boolean;
+        PassiveLordOfTheDeepProperties?: PassiveLordOfTheDeepProperties;
         IsPassiveBalistics?: boolean;
         PassiveBalisticsProperties?: PassiveBalisticsProperties;
         IsPassiveLuckyHit?: boolean;
         PassiveLuckyHitProperties?: PassiveLuckyHitProperties;
         IsPassiveIcyFists?: boolean;
         PassiveIcyFistsProperties?: PassiveIcyFistsProperties;
-        IsPassiveLordOfTheDeep?: boolean;
-        PassiveLordOfTheDeepProperties?: PassiveLordOfTheDeepProperties;
-    }
-    interface PassiveLordOfTheDeepProperties {
-        IsOnAllyActionDamagePostHit: boolean;
-        IsOnCounterAttackPostHit: boolean;
-        BleedDamage: number;
-        TypeRestriction1: EMonsterType;
     }
     interface PassiveIcyFistsProperties {
         IsOnActionDamageHit: boolean;
@@ -1059,6 +1053,12 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsOnCalculateStats: boolean;
         DamageBonus: number;
         MissChance: number;
+    }
+    interface PassiveLordOfTheDeepProperties {
+        IsOnAllyActionDamagePostHit: boolean;
+        IsOnCounterAttackPostHit: boolean;
+        BleedDamage: number;
+        TypeRestriction1: EMonsterType;
     }
     interface PassiveMasterOfTimeProperties {
         IsOnCombatStart: boolean;
@@ -1090,6 +1090,18 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         ShieldAmount: number;
         TypeRestriction: EMonsterType;
     }
+    interface PassiveGorgeousPlumageProperties {
+        IsOnCalculateTeamMonsterStats: boolean;
+        IsOnCalculateEnemyStats: boolean;
+        BuffIncrease: number;
+        DebuffIncrease: number;
+        TypeRestriction: EMonsterType;
+    }
+    interface PassiveElementalShiftProperties {
+        IsOnActionFinished: boolean;
+        ResistMultiplier: number;
+        WeakMultiplier: number;
+    }
     interface PassiveAncientPredationProperties {
         IsOnCombatStart: boolean;
         IsOnAllyCombatStart: boolean;
@@ -1112,18 +1124,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsOnAllyBeingHit: boolean;
         BonusValue: number;
     }
-    interface PassiveGorgeousPlumageProperties {
-        IsOnCalculateTeamMonsterStats: boolean;
-        IsOnCalculateEnemyStats: boolean;
-        BuffIncrease: number;
-        DebuffIncrease: number;
-        TypeRestriction: EMonsterType;
-    }
-    interface PassiveElementalShiftProperties {
-        IsOnActionFinished: boolean;
-        ResistMultiplier: number;
-        WeakMultiplier: number;
-    }
     interface PassiveChargedHealingProperties {
         IsOnActionHealTarget: boolean;
     }
@@ -1131,11 +1131,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsOnTriggerShockDamage: boolean;
         Buff: ESpecialBuff;
         StackCount: number;
-    }
-    interface PassivePrimalRageProperties {
-        IsOnCalculateStatsPostMultiplication: boolean;
-        DamageBonus: number;
-        DamagePerAge: number;
     }
     interface PassiveBlindingSparksProperties {
         IsOnTriggerBurnDamage: boolean;
@@ -1185,25 +1180,15 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         DamageBonus: number;
         TypeRestriction: EMonsterType;
     }
-    interface PassiveBurningFaithProperties {
-        IsOnTriggerBurnDamage: boolean;
-        Shield: number;
+    interface PassivePrimalRageProperties {
+        IsOnCalculateStatsPostMultiplication: boolean;
+        DamageBonus: number;
+        DamagePerAge: number;
     }
     interface PassiveCleansingBurnProperties {
         IsOnTriggerBurnDamage: boolean;
         IsOnAllyApplyDebuffToEnemy: boolean;
         Chance: number;
-    }
-    interface ActionDebuffCataclystProperties {
-        Data: Datum[];
-    }
-    interface Datum {
-        Debuff: DebuffType;
-        Time: number;
-    }
-    interface PassiveOccultControlProperties {
-        IsOnAllyBeingHit: boolean;
-        DamageReduction: number;
     }
     interface PassiveImpactfulShockProperties {
         CritChanceBonus: number;
@@ -1220,18 +1205,20 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         PerMana: number;
         AdditionalStacks: number;
     }
-    interface PassiveBrokenImmunityProperties {
-        IsOnCalculateEnemyStats: boolean;
-        IncreaseAmount: number;
-        DebuffType: DebuffType;
+    interface ActionDebuffCataclystProperties {
+        Data: Datum[];
     }
-    interface PassiveSevereInfectionProperties {
-        IsOnCalculateEnemyStats: boolean;
-        DebuffModifier: number;
+    interface Datum {
+        Debuff: DebuffType;
+        Time: number;
     }
-    interface PassiveSevereNatureProperties {
-        IsOnTriggerCongealDamage: boolean;
-        TriggerChance: number;
+    interface PassiveOccultControlProperties {
+        IsOnAllyBeingHit: boolean;
+        DamageReduction: number;
+    }
+    interface PassiveBurningFaithProperties {
+        IsOnTriggerBurnDamage: boolean;
+        Shield: number;
     }
     interface PassiveThickSkinProperties {
         IsOnBeingHit: boolean;
@@ -1246,10 +1233,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         TypeRestriction1: EMonsterType;
         TypeRestriction2: EMonsterType;
     }
-    interface PassiveRegenerationShieldProperties {
-        IsOnAllyRegenerationTrigger: boolean;
-        ShieldAmount: number;
-    }
     interface PassiveSlimeSupportProperties {
         IsOnCalculateTeamMonsterStats: boolean;
         IsOnCombatStart: boolean;
@@ -1257,6 +1240,19 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IncreaseAmount: number;
         TypeRestriction: EMonsterType;
         GrantsAgeStack: boolean;
+    }
+    interface PassiveAcidSpitProperties {
+        IsOnAllyActionDamageHit: boolean;
+        Chance: number;
+        TypeRestriction: EMonsterType;
+    }
+    interface PassiveSevereInfectionProperties {
+        IsOnCalculateEnemyStats: boolean;
+        DebuffModifier: number;
+    }
+    interface PassiveSevereNatureProperties {
+        IsOnTriggerCongealDamage: boolean;
+        TriggerChance: number;
     }
     interface PassiveRebornFromAshesProperties {
         IsOnAllyRevive: boolean;
@@ -1267,11 +1263,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsOnCalculateEnemyStats: boolean;
         damageIncrease: number;
     }
-    interface PassiveAcidSpitProperties {
-        IsOnAllyActionDamageHit: boolean;
-        Chance: number;
-        TypeRestriction: EMonsterType;
-    }
     interface PassiveSuperchargedProperties {
         IsOnCalculateStatsPostMultiplication: boolean;
         StacksRequired: number;
@@ -1280,27 +1271,19 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
     interface PassiveFuelProperties {
         IsOnTriggerBurnDamage: boolean;
     }
-    interface PassiveChargingDebuffsProperties {
-        IsOnAllyConsumeCharges: boolean;
-        Debuffs: DebuffType[];
-        ChargeStacksNeeded: number;
-    }
     interface PassiveGoblinScienceProperties {
         IsOnAllyActionFinished: boolean;
         ChargeStacks: number;
         TypeRestriction: EMonsterType;
     }
-    interface PassiveCurseResistanceProperties {
-        IsOnCalculateStats: boolean;
-        Modifier: number;
+    interface PassiveBrokenImmunityProperties {
+        IsOnCalculateEnemyStats: boolean;
+        IncreaseAmount: number;
+        DebuffType: DebuffType;
     }
-    interface PassiveStickFocusProperties {
-        IsOnCalculateStats: boolean;
-        IsOnCombatStart: boolean;
-        IsOnAllyCombatStart: boolean;
-        AttackBonus: number;
-        DefenseBonus: number;
-        Shielding: number;
+    interface PassiveRegenerationShieldProperties {
+        IsOnAllyRegenerationTrigger: boolean;
+        ShieldAmount: number;
     }
     interface PassiveDebuffTriggersDebuffProperties {
         IsOnTriggerBurnDamage: boolean;
@@ -1320,39 +1303,36 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsOnTriggerBurnDamage: boolean;
         Mana: number;
     }
-    interface PassiveShiftNeutralElementProperties {
-        ToElement: EElement;
+    interface PassiveStickFocusProperties {
+        IsOnCalculateStats: boolean;
+        IsOnCombatStart: boolean;
+        IsOnAllyCombatStart: boolean;
+        AttackBonus: number;
+        DefenseBonus: number;
+        Shielding: number;
     }
-    interface PassiveDragonMasteryProperties {
-        IsOnAllyActionStarted: boolean;
-        TypeRestriction: EMonsterType;
+    interface PassiveChargingDebuffsProperties {
+        IsOnAllyConsumeCharges: boolean;
+        Debuffs: DebuffType[];
+        ChargeStacksNeeded: number;
+    }
+    interface PassiveCurseResistanceProperties {
+        IsOnCalculateStats: boolean;
+        Modifier: number;
     }
     interface PoisonedNervesProperties {
         IsOnCalculateEnemyStats: boolean;
         ManaRegenReduction: number;
     }
+    interface PassiveShiftNeutralElementProperties {
+        ToElement: EElement;
+    }
     interface PassiveSupremacyProperties {
         IsOnAllyApplyDebuffToEnemy: boolean;
         ChargeStacks: number;
     }
-    interface PassiveRestorationProperties {
-        IsOnAllyRegenerationTrigger: boolean;
-        Chance: number;
-    }
-    interface PassiveDemotivateProperties {
-        IsOnCalculateEnemyStats: boolean;
-        Debuff: DebuffType;
-        HealShieldReductionValue: number;
-    }
-    interface PassiveGainBuffProperties {
-        IsOnApplyDebuffToEnemy: boolean;
-        Buff: BuffType;
-        TriggerType: number;
-        Chance: number;
-    }
-    interface PassiveEternalHeartProperties {
-        IsOnCalculateStats: boolean;
-        Value: number;
+    interface PassiveTenaciousBarrierProperties {
+        ResistChance: number;
     }
     interface PassiveStunnedProperties {
         IsOnCalculateEnemyStats: boolean;
@@ -1377,8 +1357,28 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsOnAllyManaSpent: boolean;
         ManaReduction: number;
     }
-    interface PassiveTenaciousBarrierProperties {
-        ResistChance: number;
+    interface PassiveRestorationProperties {
+        IsOnAllyRegenerationTrigger: boolean;
+        Chance: number;
+    }
+    interface PassiveDemotivateProperties {
+        IsOnCalculateEnemyStats: boolean;
+        Debuff: DebuffType;
+        HealShieldReductionValue: number;
+    }
+    interface PassiveGainBuffProperties {
+        IsOnApplyDebuffToEnemy: boolean;
+        Buff: BuffType;
+        TriggerType: number;
+        Chance: number;
+    }
+    interface PassiveEternalHeartProperties {
+        IsOnCalculateStats: boolean;
+        Value: number;
+    }
+    interface PassiveDragonMasteryProperties {
+        IsOnAllyActionStarted: boolean;
+        TypeRestriction: EMonsterType;
     }
     interface PassiveCurseTransfusionProperties {
         IsOnCalculateStats: boolean;
@@ -1400,18 +1400,14 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         ShieldMagicScaling: number;
         DebuffRemove: number;
     }
-    interface PassiveAssaultShieldProperties {
-        IsOnActionDamagePostHit: boolean;
-        IsOnCounterAttackPostHit: boolean;
-        IsOnCalculateStats: boolean;
-        ShieldPercent: number;
-        CritChanceIncrease: number;
-    }
-    interface PassiveChainReactionProperties {
-        IsOnActionDamageStarted: boolean;
-    }
-    interface PassiveMagnetizeProperties {
+    interface PassiveTauntProperties {
+        IsOnBeingHit: boolean;
         Chance: number;
+        DamageIncrease: number;
+    }
+    interface PassiveHeroicAssaultProperties {
+        IsOnCalculateTeamMonsterStats: boolean;
+        CritChanceBonus: number;
     }
     interface PassiveReflectBleedProperties {
         IsOnAllyBeingHit: boolean;
@@ -1426,15 +1422,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
     interface PassiveManaBolsterProperties {
         IsOnCalculateTeamMonsterStats: boolean;
         ManaRegeneration: number;
-    }
-    interface PassiveTauntProperties {
-        IsOnBeingHit: boolean;
-        Chance: number;
-        DamageIncrease: number;
-    }
-    interface PassiveHeroicAssaultProperties {
-        IsOnCalculateTeamMonsterStats: boolean;
-        CritChanceBonus: number;
     }
     interface PassiveAeonsProperties {
         IsOnMonsterUpkeep: boolean;
@@ -1467,22 +1454,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         BuffType: BuffType;
         DamageBonus: number;
     }
-    interface PassiveProtectorProperties {
-        IsOnCalculateTeamMonsterStats: boolean;
-        IsOnAllyMonsterUpkeep: boolean;
-        damageReduction: number;
-        MonsterType: EMonsterType;
-        MonsterType2: EMonsterType;
-        OnlyMassAttacks: boolean;
-        AppliesRandomBuff: boolean;
-    }
-    interface PassiveEmpowerProperties {
-        IsOnCalculateTeamMonsterStats: boolean;
-        IsOnAllyMonsterUpkeep: boolean;
-        EmpowerValue: number;
-        MonsterType: EMonsterType;
-        AppliesRandomBuff: boolean;
-    }
     interface PassiveVolatileShieldProperties {
         IsOnActionDamageStarted: boolean;
         ShieldConsume: number;
@@ -1499,37 +1470,22 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         ReflectAmount: number;
         ReflectKeeperBattles: number;
     }
-    interface PassiveImproveBuffProperties {
-        BuffType: BuffType;
-        Value: number;
+    interface PassiveChainReactionProperties {
+        IsOnActionDamageStarted: boolean;
     }
     interface ActionRedirectProperties {
         AnimElement?: any;
         Offset?: any;
     }
-    interface PassiveSplatterProperties {
-        IsOnEnemyDeath: boolean;
+    interface PassiveMagnetizeProperties {
+        Chance: number;
     }
-    interface PassiveCriticalEdgeProperties {
+    interface PassiveAssaultShieldProperties {
         IsOnActionDamagePostHit: boolean;
-        IsOnHealTarget: boolean;
-    }
-    interface PassiveStartCombatChargesProperties {
-        IsOnCombatStart: boolean;
-        IsOnAllyCombatStart: boolean;
-        Count: number;
-        TypeRestriction: EMonsterType;
-        TriggerForBackupMonsters: boolean;
-    }
-    interface PassiveDevourProperties {
-        IsOnAllyActionFinished: boolean;
-        HealAmount: number;
-    }
-    interface PassiveChargedUpProperties {
-        IsOnActionDamageHit: boolean;
+        IsOnCounterAttackPostHit: boolean;
         IsOnCalculateStats: boolean;
-        IncreaseValue: number;
-        StackCap: number;
+        ShieldPercent: number;
+        CritChanceIncrease: number;
     }
     interface PassiveSidekickSupportProperties {
         IsOnAllyActionStarted: boolean;
@@ -1563,6 +1519,53 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsOnCalculateStats: boolean;
         Bonus: number;
     }
+    interface PassiveMystifyProperties {
+        IsOnApplyDebuffToEnemy: boolean;
+        IsOnAllyApplyDebuffToEnemy: boolean;
+        Chance: number;
+    }
+    interface PassiveSpawnOfChampionsProperties {
+        IsOnCombatStart: boolean;
+        Buffs: BuffType[];
+        TypeRestriction1: EMonsterType;
+        TypeRestriction2: EMonsterType;
+    }
+    interface PassiveSingleStrikeProperties {
+        IsOnCalculateStats: boolean;
+        DamageIncrease: number;
+    }
+    interface PassiveEmergencyChannelProperties {
+        IsOnActionFinished: boolean;
+        Threshold: number;
+    }
+    interface PassiveShatterProperties {
+        CritChanceBonus: number;
+    }
+    interface PassiveDivineShieldProperties {
+        IsOnReceiveBuff: boolean;
+        ShieldAmount: number;
+        ChargeStacks: number;
+    }
+    interface PassiveProtectorProperties {
+        IsOnCalculateTeamMonsterStats: boolean;
+        IsOnAllyMonsterUpkeep: boolean;
+        damageReduction: number;
+        MonsterType: EMonsterType;
+        MonsterType2: EMonsterType;
+        OnlyMassAttacks: boolean;
+        AppliesRandomBuff: boolean;
+    }
+    interface PassiveEmpowerProperties {
+        IsOnCalculateTeamMonsterStats: boolean;
+        IsOnAllyMonsterUpkeep: boolean;
+        EmpowerValue: number;
+        MonsterType: EMonsterType;
+        AppliesRandomBuff: boolean;
+    }
+    interface PassiveImproveBuffProperties {
+        BuffType: BuffType;
+        Value: number;
+    }
     interface PassiveForcefulBuffProperties {
         IsOnCalculateTeamMonsterStats: boolean;
         ReductionBypass: number;
@@ -1576,6 +1579,20 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsOnActionFinished: boolean;
         DefenseScaling: number;
     }
+    interface PassiveBerserkProperties {
+        IsOnActionDamagePostHit: boolean;
+        DamageTreshold: number;
+        ChampionTreshold: number;
+        ChargeStacks: number;
+    }
+    interface PassiveSevereHitProperties {
+        IsOnActionDamagePostHit: boolean;
+        IsOnCounterAttackPostHit: boolean;
+        Debuff: DebuffType;
+        SpecialBuff: BuffType;
+        DamageTreshold: number;
+        ChampionTreshold: number;
+    }
     interface PassiveKingOfBeastsProperties {
         IsOnCalculateStats: boolean;
         IsOnCalculateTeamMonsterStats: boolean;
@@ -1587,106 +1604,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsOnBeingHit: boolean;
         Mana: number;
     }
-    interface PassiveRelentlessProperties {
-        ManaReduction: number;
-    }
-    interface PassiveUtopiaProperties {
-        IsOnMonsterUpkeep: boolean;
-        ChargeStacks: number;
-    }
-    interface PassiveAgeOfPurificationProperties {
-        IsOnAllyReceiveSpecialBuff: boolean;
-    }
-    interface PassiveCriticalBuffProperties {
-        IsOnApplyBuff: boolean;
-        StackCount: number;
-    }
-    interface PassiveOutlastProperties {
-        IsOnAllyReceiveSpecialBuff: boolean;
-        ShieldAmount: number;
-        Cap: number;
-    }
-    interface PassiveAntiCascadeProperties {
-        IsOnBeingHit: boolean;
-        DamageBonus: number;
-    }
-    interface PassiveCleansingSidekickProperties {
-        IsOnAllyActionDamageHit: boolean;
-    }
-    interface PassiveEvasionProperties {
-        IsOnCalculateStatsPostMultiplication: boolean;
-        DodgeChance: number;
-    }
-    interface PassiveCriticalMassProperties {
-        IsOnActionDamageHit: boolean;
-        IsOnHealTarget: boolean;
-        Chance: number;
-        OnCriticalHit: boolean;
-    }
-    interface PassivePunishmentProperties {
-        IsOnAllyRemoveBuff: boolean;
-        TriggerChance: number;
-        Damage: number;
-        AnimElement?: any;
-    }
-    interface PassivePathToProperties {
-        IsOnAllyBeingAttacked: boolean;
-        TypeRestriction: EMonsterType;
-        Buff1: BuffType;
-        Buff2: BuffType;
-        BuffChance: number;
-    }
-    interface PassiveBuffStealProperties {
-        IsOnAllyRemoveBuff: boolean;
-    }
-    interface PassiveWeaponBreakProperties {
-        IsOnCalculateEnemyStats: boolean;
-        ReduceCritValue: number;
-    }
-    interface PassiveBlindingSupportProperties {
-        IsOnActionStarted: boolean;
-    }
-    interface PassiveStaticProperties {
-        IsOnActionDamageHit: boolean;
-        DamageBonus: number;
-    }
-    interface PassiveMartialProwessProperties {
-        IsOnDodgeHit: boolean;
-        chance: number;
-    }
-    interface PassiveDodgingProperties {
-        IsOnCalculateStats: boolean;
-        IsOnCalculateTeamMonsterStats: boolean;
-        DodgeChance: number;
-        TypeRestriction: EMonsterType;
-    }
-    interface PassiveTrueDarknessProperties {
-        IsOnAllyApplySpecialBuff: boolean;
-        Chance: number;
-    }
-    interface PassiveEnlightenProperties {
-        IsOnReceiveBuffPreCheck: boolean;
-        Chance: number;
-    }
-    interface PassiveSevereHitProperties {
-        IsOnActionDamagePostHit: boolean;
-        IsOnCounterAttackPostHit: boolean;
-        Debuff: DebuffType;
-        SpecialBuff: BuffType;
-        DamageTreshold: number;
-        ChampionTreshold: number;
-    }
-    interface PassiveMystifyProperties {
-        IsOnApplyDebuffToEnemy: boolean;
-        IsOnAllyApplyDebuffToEnemy: boolean;
-        Chance: number;
-    }
-    interface PassiveSpawnOfChampionsProperties {
-        IsOnCombatStart: boolean;
-        Buffs: BuffType[];
-        TypeRestriction1: EMonsterType;
-        TypeRestriction2: EMonsterType;
-    }
     interface PassiveCriticalConsistencyProperties {
         IsOnActionDamageHit: boolean;
         IsOnCounterAttackHit: boolean;
@@ -1694,114 +1611,42 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         CritDamageBonus: number;
         IncreaseValue: number;
     }
-    interface PassiveSingleStrikeProperties {
-        IsOnCalculateStats: boolean;
-        DamageIncrease: number;
-    }
-    interface PassiveEmergencyChannelProperties {
-        IsOnActionFinished: boolean;
-        Threshold: number;
-    }
-    interface PassiveBerserkProperties {
-        IsOnActionDamagePostHit: boolean;
-        DamageTreshold: number;
-        ChampionTreshold: number;
-        ChargeStacks: number;
-    }
-    interface PassiveShatterProperties {
-        CritChanceBonus: number;
-    }
     interface PassiveFirstImpactProperties {
         IsOnActionDamageStarted: boolean;
         IsOnCounterAttackStarted: boolean;
         DamageBonus: number;
         MassDamageBonus: number;
     }
-    interface PassiveDivineShieldProperties {
-        IsOnReceiveBuff: boolean;
-        ShieldAmount: number;
+    interface PassiveRelentlessProperties {
+        ManaReduction: number;
+    }
+    interface PassiveUtopiaProperties {
+        IsOnMonsterUpkeep: boolean;
         ChargeStacks: number;
     }
-    interface PassiveCorrosionProperties {
-        IsOnCalculateEnemyStats: boolean;
-        DamageIncrease: number;
+    interface PassiveSplatterProperties {
+        IsOnEnemyDeath: boolean;
     }
-    interface PassivePlagueProperties {
-        IsOnTriggerPoisonDamage: boolean;
-        Chance: number;
-    }
-    interface PassiveToxicSupportProperties {
+    interface PassiveCriticalEdgeProperties {
+        IsOnActionDamagePostHit: boolean;
         IsOnHealTarget: boolean;
-        Chance: number;
-        DebuffStacks: number;
-        Debuff: DebuffType;
     }
-    interface PassiveDominanceProperties {
-        IsOnAllyActionDamageHit: boolean;
-        IsOnAllyCounterAttackHit: boolean;
-        DamageBonus: number;
-    }
-    interface PassivePreparationProperties {
+    interface PassiveStartCombatChargesProperties {
         IsOnCombatStart: boolean;
+        IsOnAllyCombatStart: boolean;
+        Count: number;
+        TypeRestriction: EMonsterType;
+        TriggerForBackupMonsters: boolean;
     }
-    interface PassiveComboInitiatorProperties {
-        IsOnCalculateStats: boolean;
-        IsOnActionDamageStarted: boolean;
-        DamageBonus: number;
-        AdditionalHitDamage: number;
-        AnimElement?: any;
+    interface PassiveDevourProperties {
+        IsOnAllyActionFinished: boolean;
+        HealAmount: number;
     }
-    interface PassiveSteampunkProperties {
-        IsOnAllyActionStarted: boolean;
-        TypeRestrition: number;
-        TypeRestrition2: number;
-        Debuff: DebuffType;
-    }
-    interface PassiveCurseChainProperties {
-        IsOnApplyDebuffToEnemy: boolean;
-        Chance: number;
-    }
-    interface PassiveCriticalBoonProperties {
+    interface PassiveChargedUpProperties {
         IsOnActionDamageHit: boolean;
-        IsOnHealTarget: boolean;
-        Chance: number;
-    }
-    interface PassiveBuffCorruptionProperties {
-        IsOnCalculateEnemyStats: boolean;
-        BuffReduce: number;
-    }
-    interface MightyBoostProperties {
-        IsOnAllyReceiveBuff: boolean;
-        ShieldAttackScaling: number;
-        NegativeStackRemove: number;
-    }
-    interface PassiveGloriousSparkProperties {
-        IsOnAllyActionDamageStarted: boolean;
-        Damage: number;
-        DamageAdditionalGlory: number;
-        AnimElement?: any;
-    }
-    interface PassiveExploitProperties {
-        IsOnAllyCounterAttackHit: boolean;
-        RandomBuff: boolean;
-        Buff: BuffType;
-        Shield: number;
-    }
-    interface PassiveChordProperties {
         IsOnCalculateStats: boolean;
-        IsOnApplyBuff: boolean;
-        Type: number;
-        Value: number;
-    }
-    interface PassiveShadowProcProperties {
-        IsOnActionDamageStarted: boolean;
-        IsOnActionHealStarted: boolean;
-        IsOnActionShieldStarted: boolean;
-        IsOnActionBuffStarted: boolean;
-        DamageValue: number;
-        AnimElement?: any;
-        ShieldValue: number;
-        HealValue: number;
+        IncreaseValue: number;
+        StackCap: number;
     }
     interface PassiveChargingShieldProperties {
         IsOnReceiveSpecialBuff: boolean;
@@ -1809,10 +1654,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
     }
     interface PassiveRevengeProperties {
         IsOnBeingHit: boolean;
-    }
-    interface PassiveHeroismProperties {
-        IsOnCalculateStats: boolean;
-        DamageBonus: number;
     }
     interface PassiveElectrolytesProperties {
         IsOnTriggerShockDamage: boolean;
@@ -1846,10 +1687,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         DamageBonus: number;
         Element: EElement;
     }
-    interface PassiveSharedBuffProperties {
-        IsOnReceiveBuffPreCheck: boolean;
-        BuffType: BuffType;
-    }
     interface PassiveMagicAttackProperties {
         MagicAttackPrefab: number;
     }
@@ -1867,9 +1704,83 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
     interface PassiveLeadershipProperties {
         IsOnReceiveSpecialBuff: boolean;
     }
-    interface ActionRemoveDebuffProperties {
-        Count: number;
-        Delay: number;
+    interface PassiveCorrosionProperties {
+        IsOnCalculateEnemyStats: boolean;
+        DamageIncrease: number;
+    }
+    interface PassivePlagueProperties {
+        IsOnTriggerPoisonDamage: boolean;
+        Chance: number;
+    }
+    interface PassiveToxicSupportProperties {
+        IsOnHealTarget: boolean;
+        Chance: number;
+        DebuffStacks: number;
+        Debuff: DebuffType;
+    }
+    interface PassiveDominanceProperties {
+        IsOnAllyActionDamageHit: boolean;
+        IsOnAllyCounterAttackHit: boolean;
+        DamageBonus: number;
+    }
+    interface PassiveComboInitiatorProperties {
+        IsOnCalculateStats: boolean;
+        IsOnActionDamageStarted: boolean;
+        DamageBonus: number;
+        AdditionalHitDamage: number;
+        AnimElement?: any;
+    }
+    interface PassiveSteampunkProperties {
+        IsOnAllyActionStarted: boolean;
+        TypeRestrition: number;
+        TypeRestrition2: number;
+        Debuff: DebuffType;
+    }
+    interface PassiveCriticalBoonProperties {
+        IsOnActionDamageHit: boolean;
+        IsOnHealTarget: boolean;
+        Chance: number;
+    }
+    interface PassiveBuffCorruptionProperties {
+        IsOnCalculateEnemyStats: boolean;
+        BuffReduce: number;
+    }
+    interface MightyBoostProperties {
+        IsOnAllyReceiveBuff: boolean;
+        ShieldAttackScaling: number;
+        NegativeStackRemove: number;
+    }
+    interface PassiveGloriousSparkProperties {
+        IsOnAllyActionDamageStarted: boolean;
+        Damage: number;
+        DamageAdditionalGlory: number;
+        AnimElement?: any;
+    }
+    interface PassiveSharedBuffProperties {
+        IsOnReceiveBuffPreCheck: boolean;
+        BuffType: BuffType;
+    }
+    interface PassiveExploitProperties {
+        IsOnAllyCounterAttackHit: boolean;
+        RandomBuff: boolean;
+        Buff: BuffType;
+        Shield: number;
+    }
+    interface PassiveChordProperties {
+        IsOnCalculateStats: boolean;
+        IsOnApplyBuff: boolean;
+        Type: number;
+        Value: number;
+    }
+    interface PassiveShadowProcProperties {
+        IsOnActionDamageStarted: boolean;
+        IsOnActionHealStarted: boolean;
+        IsOnActionShieldStarted: boolean;
+        IsOnActionBuffStarted: boolean;
+        DamageValue: number;
+        AnimElement?: any;
+        ShieldValue: number;
+        HealValue: number;
     }
     interface PassiveComboShieldingProperties {
         IsOnActionShieldStarted: boolean;
@@ -1922,10 +1833,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         TypeRestriction: EMonsterType;
         EquipmentTypes: number[];
     }
-    interface PassiveMeditateProperties {
-        IsOnActionFinished: boolean;
-        ChargeStacks: number;
-    }
     interface PassiveDoubleStrikeProperties {
         Chance: number;
         SecondHitDelay: number;
@@ -1946,10 +1853,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         Improve: number;
         TypeRestriction: EMonsterType;
     }
-    interface PassiveHeroicPartyProperties {
-        IsOnCalculateTeamMonsterStats: boolean;
-        DamageBonus: number;
-    }
     interface PassiveHeroicDefenseProperties {
         IsOnCalculateStats: boolean;
         ReduceValue: number;
@@ -1958,71 +1861,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsWeapon: boolean;
         StatReduction: number;
     }
-    interface PassivePrecisionProperties {
-        critChance: number;
-        cannotMiss: boolean;
-    }
-    interface PassiveTransfusionProperties {
-        IsOnManaRegenerated: boolean;
-        HealValue: number;
-    }
-    interface ActionShieldBurstProperties {
-        Multiplicator: number;
-        ShieldConsume: number;
-    }
-    interface PassiveSaboteursShieldProperties {
-        IsOnApplyDebuffToEnemy: boolean;
-        Percent: number;
-    }
-    interface PassiveFeastProperties {
-        IsOnEnemyBleed: boolean;
-        HealAmount: number;
-    }
-    interface ActionTypeRestrictionProperties {
-        Types: EMonsterType[];
-    }
-    interface PassiveBloodDriveProperties {
-        IsOnTriggerBurnDamage: boolean;
-        IsOnTriggerPoisonDamage: boolean;
-        IsOnTriggerCongealDamage: boolean;
-        Chance: number;
-        DamageConversion: number;
-        AnimElement?: any;
-    }
-    interface PassiveArmorBypassProperties {
-        IsOnCalculateStats: boolean;
-        IsOnCalculateTeamMonsterStats: boolean;
-        BypassAmount: number;
-        TypeRestriction: EMonsterType;
-    }
-    interface PassiveHexingSupportProperties {
-        IsOnActionFinished: boolean;
-    }
-    interface PassiveShieldAuraProperties {
-        IsOnCalculateTeamMonsterStats: boolean;
-        ShieldBonus: number;
-    }
-    interface PassiveNecromancyProperties {
-        IsOnAllyRevive: boolean;
-        HealValue: number;
-        AgeStackCount: number;
-        DebuffCount: number;
-    }
-    interface PassivePhoenixAffinityProperties {
-        HealAmount: number;
-        AnimElement?: any;
-        ChargedRebirth: boolean;
-    }
-    interface ActionShieldProperties {
-        ShieldAmount: number;
-        ScaleDefense: number;
-        ScaleMagic: number;
-        ScaleAttack: number;
-        ScaleMana: number;
-        ScaleTargetHealth: number;
-        ShieldTimings: number[];
-        ShieldCaster: boolean;
-    }
     interface PassiveBuffingShieldProperties {
         IsOnApplyBuff: boolean;
         ShieldAmount: number;
@@ -2030,10 +1868,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
     interface PassiveBuffingHealProperties {
         IsOnApplyBuff: boolean;
         ScaleMagic: number;
-    }
-    interface PassiveComboBuffingProperties {
-        IsOnAllyActionStarted: boolean;
-        AffectsHealsShields: boolean;
     }
     interface PassiveChannelingBalanceProperties {
         IsOnCalculateTeamMonsterStats: boolean;
@@ -2082,18 +1916,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         FlippedAnimElement?: any;
         AnimElementDelay: number;
     }
-    interface PassiveStartCombatDebuffProperties {
-        IsOnCombatStart: boolean;
-        Debuff: DebuffType;
-    }
-    interface PassiveWarlockHealingProperties {
-        IsOnHealTarget: boolean;
-        Chance: number;
-    }
-    interface PassiveCleanseProperties {
-        IsOnActionDamageHit: boolean;
-        Chance: number;
-    }
     interface PassiveAntitoxinProperties {
         IsOnMonsterUpkeep: boolean;
         IsOnAllyMonsterUpkeep: boolean;
@@ -2102,19 +1924,132 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         TypeRestriction: EMonsterType;
         GrantsAgeStack: boolean;
     }
-    interface ActionSpecialBuffProperties {
-        Buff: ESpecialBuff;
-        DoubleBuff: boolean;
-        Buff2: BuffType;
-        StackCount: number;
-        ApplyDelay: number;
-        ApplyChance: number;
-        Variable: number;
-        TypeRestriction: EMonsterType;
-    }
     interface PassiveOverhealProperties {
         IsOnAllyHeal: boolean;
         ConversionAmount: number;
+    }
+    interface PassivePrecisionProperties {
+        critChance: number;
+        cannotMiss: boolean;
+    }
+    interface ActionShieldBurstProperties {
+        Multiplicator: number;
+        ShieldConsume: number;
+    }
+    interface PassiveSaboteursShieldProperties {
+        IsOnApplyDebuffToEnemy: boolean;
+        Percent: number;
+    }
+    interface PassiveFeastProperties {
+        IsOnEnemyBleed: boolean;
+        HealAmount: number;
+    }
+    interface ActionTypeRestrictionProperties {
+        Types: EMonsterType[];
+    }
+    interface PassiveBloodDriveProperties {
+        IsOnTriggerBurnDamage: boolean;
+        IsOnTriggerPoisonDamage: boolean;
+        IsOnTriggerCongealDamage: boolean;
+        Chance: number;
+        DamageConversion: number;
+        AnimElement?: any;
+    }
+    interface PassiveArmorBypassProperties {
+        IsOnCalculateStats: boolean;
+        IsOnCalculateTeamMonsterStats: boolean;
+        BypassAmount: number;
+        TypeRestriction: EMonsterType;
+    }
+    interface PassiveStartCombatDebuffProperties {
+        IsOnCombatStart: boolean;
+        Debuff: DebuffType;
+    }
+    interface PassiveShieldAuraProperties {
+        IsOnCalculateTeamMonsterStats: boolean;
+        ShieldBonus: number;
+    }
+    interface PassiveNecromancyProperties {
+        IsOnAllyRevive: boolean;
+        HealValue: number;
+        AgeStackCount: number;
+        DebuffCount: number;
+    }
+    interface PassivePhoenixAffinityProperties {
+        HealAmount: number;
+        AnimElement?: any;
+        ChargedRebirth: boolean;
+    }
+    interface ActionShieldProperties {
+        ShieldAmount: number;
+        ScaleDefense: number;
+        ScaleMagic: number;
+        ScaleAttack: number;
+        ScaleMana: number;
+        ScaleTargetHealth: number;
+        ShieldTimings: number[];
+        ShieldCaster: boolean;
+    }
+    interface PassiveAgeOfPurificationProperties {
+        IsOnAllyReceiveSpecialBuff: boolean;
+    }
+    interface PassiveCriticalBuffProperties {
+        IsOnApplyBuff: boolean;
+        StackCount: number;
+    }
+    interface PassiveOutlastProperties {
+        IsOnAllyReceiveSpecialBuff: boolean;
+        ShieldAmount: number;
+        Cap: number;
+    }
+    interface PassiveAgingProperties {
+        IsOnActionFinished: boolean;
+    }
+    interface PassiveComboBuffingProperties {
+        IsOnAllyActionStarted: boolean;
+        AffectsHealsShields: boolean;
+    }
+    interface PassiveAntiCascadeProperties {
+        IsOnBeingHit: boolean;
+        DamageBonus: number;
+    }
+    interface PassiveCleansingSidekickProperties {
+        IsOnAllyActionDamageHit: boolean;
+    }
+    interface PassiveEvasionProperties {
+        IsOnCalculateStatsPostMultiplication: boolean;
+        DodgeChance: number;
+    }
+    interface PassiveCriticalMassProperties {
+        IsOnActionDamageHit: boolean;
+        IsOnHealTarget: boolean;
+        Chance: number;
+        OnCriticalHit: boolean;
+    }
+    interface PassiveHeroismProperties {
+        IsOnCalculateStats: boolean;
+        DamageBonus: number;
+    }
+    interface PassivePunishmentProperties {
+        IsOnAllyRemoveBuff: boolean;
+        TriggerChance: number;
+        Damage: number;
+        AnimElement?: any;
+    }
+    interface PassivePathToProperties {
+        IsOnAllyBeingAttacked: boolean;
+        TypeRestriction: EMonsterType;
+        Buff1: BuffType;
+        Buff2: BuffType;
+        BuffChance: number;
+    }
+    interface PassiveHeroicPartyProperties {
+        IsOnCalculateTeamMonsterStats: boolean;
+        DamageBonus: number;
+    }
+    interface PassiveMeditateProperties {
+        IsOnActionFinished: boolean;
+        ChargeStacks: number;
     }
     interface PassiveSituationalSupportProperties {
         IsOnActionStarted: boolean;
@@ -2146,11 +2081,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         BasedOnCastersStat: boolean;
         DamageReduction: number;
         PerHealth: number;
-    }
-    interface PassiveAutoHealProperties {
-        IsOnActionDamageStarted: boolean;
-        MagicScaling: number;
-        HealEffect?: any;
     }
     interface PassiveCriticalDefenseProperties {
         IsOnCalculateStatsPostMultiplication: boolean;
@@ -2200,14 +2130,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         Buff: ESpecialBuff;
         DamageBonus: number;
     }
-    interface PassiveDebuffChanceProperties {
-        IsOnActionDamageHit: boolean;
-        IsOnCounterAttackHit: boolean;
-        Debuff: DebuffType;
-        Chance: number;
-        RestrictToElement: boolean;
-        ElementRestriction: number;
-    }
     interface PassiveBleedProperties {
         IsOnActionDamagePostHit: boolean;
         IsOnCounterAttackPostHit: boolean;
@@ -2222,12 +2144,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsOnCalculateStats: boolean;
         IncreaseAmount: number;
     }
-    interface PassiveCascadeProperties {
-        IsOnActionDamageHit: boolean;
-        IsOnActionHealTarget: boolean;
-        IsOnActionShieldTarget: boolean;
-        DamageBonus: number;
-    }
     interface PassiveLifestealProperties {
         IsOnActionDamagePostHit: boolean;
         IsOnCalculateStats: boolean;
@@ -2235,12 +2151,6 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         OnlyOnCriticalHits: boolean;
         AffectsWholeParty: boolean;
         CritChanceIncrease: number;
-    }
-    interface ActionDebuffProperties {
-        Debuffs: DebuffType[];
-        ApplyDelay: number;
-        ApplyChance: number;
-        TargetCount: number;
     }
     interface PassiveChargingBuffsProperties {
         IsOnAllyReceiveSpecialBuff: boolean;
@@ -2262,21 +2172,9 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         ManaThreshhold: number;
         AffectsAllies: boolean;
     }
-    interface PassiveIncreaseBuffStacksProperties {
-        stackCountIncrease: number;
-        Buff: BuffType;
-        DuoBuff: boolean;
-        Buff2: BuffType;
-    }
     interface PassiveChannelingSustainProperties {
         IsOnAllyMonsterUpkeep: boolean;
         ManaScaling: number;
-    }
-    interface ActionBuffProperties {
-        Buffs: BuffType[];
-        ApplyDelay: number;
-        SecondaryBuffCount: number;
-        RandomBuffCount: number;
     }
     interface PassiveSupplyProperties {
         IsOnMonsterUpkeep: boolean;
@@ -2312,25 +2210,9 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         Stat: EStat;
         Bonus: number;
     }
-    interface PassiveComboMasterProperties {
-        IsOnAllyActionDamageStarted: boolean;
-        DamageValue: number;
-        StatScaling: number;
-        ScaleStat: EStat;
-        AnimElement?: any;
-        ElementRestriction: number;
-        TypeRestriction: EMonsterType;
-    }
     interface PassiveRenewalProperties {
         IsOnAllyDebuffOrStackRemoved: boolean;
         HealShieldAmount: number;
-    }
-    interface PassiveIncreaseDebuffStacksProperties {
-        stackCountIncrease: number;
-        Debuff: DebuffType;
-    }
-    interface PassiveDisorientedProperties {
-        DodgeChance: number;
     }
     interface ActionDebuffOnHitProperties {
         Debuff: DebuffType;
@@ -2338,21 +2220,8 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         Debuff2: DebuffType;
         ApplyChance: number;
     }
-    interface PassiveComboHealingProperties {
-        IsOnActionHealStarted: boolean;
-        HealMagicScale: number;
-        HealAttackScale: number;
-        HealDefenseScale: number;
-        HealManaeScale: number;
-    }
     interface PassiveStuckTightProperties {
         CritChanceIncrease: number;
-    }
-    interface PassiveSpecialBuffChanceProperties {
-        IsOnActionDamageHit: boolean;
-        Buff: ESpecialBuff;
-        Chance: number;
-        ElementRestriction: number[];
     }
     interface PassiveImproveStatDependantProperties {
         IsOnCalculateStatsPostMultiplication: boolean;
@@ -2366,17 +2235,78 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         IsOnActionDamageStarted: boolean;
         Count: number;
     }
-    interface PassiveImproveStatProperties {
-        IsOnCalculateBaseStats: boolean;
+    interface PassiveManaPotentialProperties {
         IsOnCalculateStats: boolean;
-        Stat: EStat;
-        Value: number;
-        IsPercent: boolean;
-        IsNegative: boolean;
+        IsOnActionDamageHit: boolean;
+        Multiplier: number;
+        ManaRequired: number;
     }
-    interface PassiveElementModifierProperties {
-        Element: EElement;
-        Modifier: number;
+    interface PassiveHealChargingProperties {
+        IsOnHealTarget: boolean;
+    }
+    interface PassiveBuffStealProperties {
+        IsOnAllyRemoveBuff: boolean;
+    }
+    interface PassiveIncreaseDebuffStacksProperties {
+        stackCountIncrease: number;
+        Debuff: DebuffType;
+    }
+    interface PassiveAutoHealProperties {
+        IsOnActionDamageStarted: boolean;
+        MagicScaling: number;
+        HealEffect?: any;
+    }
+    interface PassiveWeaponBreakProperties {
+        IsOnCalculateEnemyStats: boolean;
+        ReduceCritValue: number;
+    }
+    interface PassiveCleanseProperties {
+        IsOnActionDamageHit: boolean;
+        Chance: number;
+    }
+    interface PassiveDebuffChanceProperties {
+        IsOnActionDamageHit: boolean;
+        IsOnCounterAttackHit: boolean;
+        Debuff: DebuffType;
+        Chance: number;
+        RestrictToElement: boolean;
+        ElementRestriction: number;
+    }
+    interface ActionDebuffProperties {
+        Debuffs: DebuffType[];
+        ApplyDelay: number;
+        ApplyChance: number;
+        TargetCount: number;
+    }
+    interface PassiveComboHealingProperties {
+        IsOnActionHealStarted: boolean;
+        HealMagicScale: number;
+        HealAttackScale: number;
+        HealDefenseScale: number;
+        HealManaeScale: number;
+    }
+    interface PassiveIncreaseBuffStacksProperties {
+        stackCountIncrease: number;
+        Buff: BuffType;
+        DuoBuff: boolean;
+        Buff2: BuffType;
+    }
+    interface ActionBuffProperties {
+        Buffs: BuffType[];
+        ApplyDelay: number;
+        SecondaryBuffCount: number;
+        RandomBuffCount: number;
+    }
+    interface PassiveBlindingSupportProperties {
+        IsOnActionStarted: boolean;
+    }
+    interface PassiveWarlockHealingProperties {
+        IsOnHealTarget: boolean;
+        Chance: number;
+    }
+    interface ActionRemoveDebuffProperties {
+        Count: number;
+        Delay: number;
     }
     interface ActionHealProperties {
         HealAmount: number;
@@ -2392,6 +2322,77 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         HealAnimElement?: any;
         AnimElementDelay: number;
         ActionDurationIncrease: number;
+    }
+    interface PassiveTransfusionProperties {
+        IsOnManaRegenerated: boolean;
+        HealValue: number;
+    }
+    interface PassiveStaticProperties {
+        IsOnActionDamageHit: boolean;
+        DamageBonus: number;
+    }
+    interface PassiveCascadeProperties {
+        IsOnActionDamageHit: boolean;
+        IsOnActionHealTarget: boolean;
+        IsOnActionShieldTarget: boolean;
+        DamageBonus: number;
+    }
+    interface PassiveComboMasterProperties {
+        IsOnAllyActionDamageStarted: boolean;
+        DamageValue: number;
+        StatScaling: number;
+        ScaleStat: EStat;
+        AnimElement?: any;
+        ElementRestriction: number;
+        TypeRestriction: EMonsterType;
+    }
+    interface PassiveMartialProwessProperties {
+        IsOnDodgeHit: boolean;
+        chance: number;
+    }
+    interface PassiveUncannyProperties {
+        DodgeChance: number;
+    }
+    interface PassiveDodgingProperties {
+        IsOnCalculateStats: boolean;
+        IsOnCalculateTeamMonsterStats: boolean;
+        DodgeChance: number;
+        TypeRestriction: EMonsterType;
+    }
+    interface PassiveTrueDarknessProperties {
+        IsOnAllyApplySpecialBuff: boolean;
+        Chance: number;
+    }
+    interface PassiveInitialDarknessProperties {
+        IsOnCombatStart: boolean;
+    }
+    interface PassiveSpecialBuffChanceProperties {
+        IsOnActionDamageHit: boolean;
+        Buff: ESpecialBuff;
+        Chance: number;
+        ElementRestriction: number[];
+    }
+    interface PassiveImproveStatProperties {
+        IsOnCalculateBaseStats: boolean;
+        IsOnCalculateStats: boolean;
+        Stat: EStat;
+        Value: number;
+        IsPercent: boolean;
+        IsNegative: boolean;
+    }
+    interface PassiveElementModifierProperties {
+        Element: EElement;
+        Modifier: number;
+    }
+    interface ActionSpecialBuffProperties {
+        Buff: ESpecialBuff;
+        DoubleBuff: boolean;
+        Buff2: ESpecialBuff;
+        StackCount: number;
+        ApplyDelay: number;
+        ApplyChance: number;
+        Variable: number;
+        TypeRestriction: EMonsterType;
     }
     interface ActionDamageProperties {
         DamageMultiplicator: number;
@@ -2428,20 +2429,19 @@ export declare namespace ExportedMonsterSanctuaryDataTypes {
         SpecialAttackAnimation: boolean;
         IsPotion: boolean;
     }
-    interface PassiveManaPotentialProperties {
-        IsOnCalculateStats: boolean;
-        IsOnActionDamageHit: boolean;
-        Multiplier: number;
-        ManaRequired: number;
+    interface PassiveCurseChainProperties {
+        IsOnApplyDebuffToEnemy: boolean;
+        Chance: number;
     }
-    interface PassiveHealChargingProperties {
-        IsOnHealTarget: boolean;
+    interface PassiveEnlightenProperties {
+        IsOnReceiveBuffPreCheck: boolean;
+        Chance: number;
     }
     interface PassiveSkillProperties {
-        OverlaySpecialBuff?: OverlaySpecialBuff;
         Description: string;
         IsAura: boolean;
         IsUnique: boolean;
+        OverlaySpecialBuff?: OverlaySpecialBuff;
         OverlayDebuffs?: DebuffType[];
         OverlayBuffs?: BuffType[];
     }
